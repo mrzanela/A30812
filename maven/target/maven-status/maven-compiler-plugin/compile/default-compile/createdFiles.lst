@@ -1,0 +1,11 @@
+aplicacao\aplicacao.class
+model\ItemCompra.class
+dao\ProdutoDAO.class
+model\Cliente.class
+model\Compra.class
+model\Produto.class
+dao\ClienteDAO.class
+model\Vendedor.class
+aplicacao\Main.class
+dao\VendedorDAO.class
+factory\ConnectionFactory.class
