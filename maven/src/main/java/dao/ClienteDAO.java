@@ -23,7 +23,6 @@ public class ClienteDAO {
             ps.setString(4, c.getEndereco());
             ps.setString(5, c.getEmail());
             ps.setString(6, c.getSenha());
-            
 
             ps.executeUpdate();
 
@@ -75,41 +74,14 @@ public class ClienteDAO {
     }
 
 // método para deletar cliente
-    public void deleteCLiente(int id) {
-//        String sql = "DELETE FROM clientes WHERE id = ?";
-//
-//        Connection conn = null;
-//        PreparedStatement pstm = null;
-//
-//        try {
-//
-//            int rowsAffected = pstm.executeUpdate();
-//
-//            if (rowsAffected > 0) {
-//                System.out.println("Cliente deletado com sucesso!");
-//            } else {
-//                System.out.println("Cliente com ID " + id + "não encontrado.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (pstm != null) {
-//                    pstm.close();
-//                }
-//                if (conn != null) {
-//                    conn.close();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+    public static void deleteCliente(int id) {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "DELETE FROM clientes WHERE id = ?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(0, id);
+            System.out.println("Query SQL: " + ps); // Imprime a query SQL sendo executada
 
             int rowsAffected = ps.executeUpdate();
 
@@ -168,7 +140,6 @@ public class ClienteDAO {
 //        }
 
 //#endregion
-
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "UPDATE clientes SET nome = ?, cpf = ?, endereco = ?, email = ?, senha = ?, dataCadastro = ? WHERE id = ?";
 
@@ -179,7 +150,7 @@ public class ClienteDAO {
             ps.setString(2, cliente.getCpf());
             ps.setString(3, cliente.getEndereco());
             ps.setString(4, cliente.getEmail());
-            ps.setString(5, cliente.getSenha());           
+            ps.setString(5, cliente.getSenha());
             ps.setInt(6, cliente.getId());
 
             int rowsAffected = ps.executeUpdate();

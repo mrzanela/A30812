@@ -28,7 +28,7 @@ public class AppController {
     }
 
     public void iniciar() {
-        int id, op = -1, op1 = -1;
+        int id = 0, op = -1, op1 = -1;
         do {
             op = AppView.menuInicial();
             switch (op) {
@@ -49,7 +49,15 @@ public class AppController {
                 case 3: // atualizar cliente
                     System.out.println("FUNÇÃO A SE FAZER");
                     break;
-                case 4:
+                case 4: //deletar cliente
+                    int idParaDeletar = cv.defineCliente();
+                    boolean deletado = cc.deletaCliente(idParaDeletar);
+                    if(deletado){
+                    cv.mostraMsgDelecao();
+                    }else{
+                        cv.mostraMsgClienteNaoEncontrado();                    }
+                    break;
+                case 5:
                     AppView.mostraMsgFim();
                     op = -1;
                     break;

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Date;
-
 public class Cliente {
 
     private int id;
@@ -20,6 +18,17 @@ public class Cliente {
         this.senha = senha;
     }
     public Cliente(){}
+    
+    @Override
+    public String toString() {
+        return "Cliente{" +          
+                "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 
     public int getId() {
         return id;

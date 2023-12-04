@@ -34,5 +34,28 @@ public class ClienteController {
             status = true;
         }
         return status;
-    }    
+    }
+
+    public boolean deletaCliente(int id) {
+        boolean status = false;
+        // Verifica se o ID do cliente existe na lista de clientes
+        Cliente clienteParaDeletar = null;
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == id) {
+                clienteParaDeletar = cliente;
+                break;
+            }
+        }
+
+        if (clienteParaDeletar != null) {
+            // Remove da lista
+            clientes.remove(clienteParaDeletar);
+            // Remove do banco de dados
+            ClienteDAO.deleteCliente(id);
+            status = true;
+        }
+
+        return status;
+    }
+
 }

@@ -32,15 +32,15 @@ public class aplicacao {
     }
 
     // deletar cliente
-    public static void deletarCliente() {
-
-        // id do cliente para ser deletado
-        int idClienteDel = 10;
-
-        ClienteDAO clienteDAO = new ClienteDAO();
-        clienteDAO.deleteCLiente(idClienteDel);
-
-    }
+//    public static void deletarCliente() {
+//
+//        // id do cliente para ser deletado
+//        int idClienteDel = 10;
+//
+//        ClienteDAO clienteDAO = new ClienteDAO();
+//        clienteDAO.deleteCLiente(idClienteDel);
+//
+//    }
 
     // atualizar cliente
     public static void attCliente() {

@@ -4,7 +4,6 @@
  */
 package view;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import model.Cliente;
@@ -25,6 +24,7 @@ public class ClienteView {
      */
     public ClienteView(List<Cliente> clientes) {
         this.clientes = clientes;
+        this.scan = new Scanner(System.in);
     }
 
     /**
@@ -65,25 +65,42 @@ public class ClienteView {
         System.out.println("Informe a senha do cliente " + i + ": ");
         String senha = scan.nextLine();
 
-        Date dataCadastro = new Date();
-
         return new Cliente(i, nome, cpf, endereco, email, senha);
     }
+
     /**
      * Exibir msg de confirmação de criação do cliente
      */
     public void mostraMsgCriacao() {
         System.out.println("-------------------------------");
-        System.out.println("Funcionario criado com sucesso!");
+        System.out.println("Cliente criado com sucesso!");
         System.out.println("-------------------------------");
     }
+
     /**
      * Define o cliente pelo id
+     *
      * @return id
      */
-    public int defineCliente(){
+    public int defineCliente() {
         System.out.println("Informe o id do cliente: ");
         return scan.nextInt();
     }
     
+    /**
+     * Exibir msg de confirmação de deleção do cliente
+     */
+    public void mostraMsgDelecao() {
+
+        System.out.println("-------------------------------");
+        System.out.println("Cliente deletado com sucesso!");
+        System.out.println("-------------------------------");
+    }
+    
+    public void mostraMsgClienteNaoEncontrado(){
+        System.out.println("-------------------------------");
+        System.out.println("Cliente não encontrado e/ou não existente");
+        System.out.println("-------------------------------");
+    }
+
 }
