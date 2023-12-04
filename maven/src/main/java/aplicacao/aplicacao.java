@@ -20,7 +20,6 @@ public class aplicacao {
         cliente.setEndereco("R. Andorinhas, 128, Betim-MG");
         cliente.setEmail("aa@gmail.com");
         cliente.setSenha("aaaa");
-        cliente.setDataCadastro(new Date());
         clienteDao.saveCliente(cliente);
     }
 

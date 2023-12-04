@@ -6,182 +6,191 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import factory.ConnectionFactory;
+//import factory.ConnectionFactory;
+import java.sql.SQLException;
 import model.Cliente;
 
 public class ClienteDAO {
 
-    public void saveCliente(Cliente cliente) {
-
-        String sql = "INSERT INTO clientes(nome, cpf, endereco, email, senha, dataCadastro) VALUES (?, ?, ?,?, ?,?)";
-
-        Connection conn = null;
-        java.sql.PreparedStatement pstm = null;
-
+    public static void saveCliente(Cliente c) {
+        Connection conn = DBConnection.getInstance().getConnection();
         try {
-            // Criar uma conexao com o banco de dados
-            conn = ConnectionFactory.createConnectionToMySQL();
+            String sql = "insert into clientes (id, nome, cpf, endereco, email, senha) values (?, ?, ?,?,?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, c.getId());
+            ps.setString(2, c.getNome());
+            ps.setString(3, c.getCpf());
+            ps.setString(4, c.getEndereco());
+            ps.setString(5, c.getEmail());
+            ps.setString(6, c.getSenha());
+            
 
-            pstm = conn.prepareStatement(sql);
+            ps.executeUpdate();
 
-            pstm.setString(1, cliente.getNome());
-            pstm.setString(2, cliente.getCpf());
-            pstm.setString(3, cliente.getEndereco());
-            pstm.setString(4, cliente.getEmail());
-            pstm.setString(5, cliente.getSenha());
-            pstm.setDate(6, new Date(cliente.getDataCadastro().getTime()));
-
-            // Executar a query
-            pstm.execute();
-
-            System.out.println("Cliente salvo com sucesso!");
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
-        } finally {
-
-            // Fechar as conexoes
-            try {
-                if (pstm != null) {
-                    pstm.close();
-                }
-
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public List<Cliente> getClientes() {
-
-        String sql = "SELECT * FROM clientes";
-
-        List<Cliente> clientes = new ArrayList<Cliente>();
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        // Classe que vai recuperar os dados do banco. ***SELECT****
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            pstm = conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                Cliente cliente = new Cliente();
-
-                cliente.setId(rset.getInt("id"));
-                cliente.setNome(rset.getString("nome"));
-                cliente.setCpf(rset.getString("cpf"));
-                cliente.setEndereco(rset.getString("endereco"));
-                cliente.setEmail(rset.getString("email"));
-                cliente.setSenha(rset.getString("senha"));
-                cliente.setDataCadastro(rset.getDate("datacadastro"));
-                clientes.add(cliente);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rset != null) {
-                    rset.close();
-                }
-
-                if (pstm != null) {
-                    pstm.close();
-                }
-
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
-        return clientes;
     }
 
-    // método para deletar cliente
+    public static List<Cliente> getClientes() {
+
+        Connection conn = DBConnection.getInstance().getConnection();
+        List<Cliente> obj = new ArrayList<>();
+        try {
+            String sql = "select * from clientes";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Cliente tmp = new Cliente(resultSet.getInt("id"), resultSet.getString("nome"),
+                        resultSet.getString("cpf"), resultSet.getString("endereco"),
+                        resultSet.getString("email"), resultSet.getString("senha"));
+                obj.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar a conexão com o banco de dados:");
+            e.printStackTrace();
+        }
+        return obj;
+
+    }
+
+    public static int buscaCodigo() {
+        Connection conn = DBConnection.getInstance().getConnection();
+        int id = 0;
+        try {
+            String sql = "select max(id) from clientes";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            id = resultSet.getInt(1);
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar a conexão com o banco de dados:");
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+// método para deletar cliente
     public void deleteCLiente(int id) {
+//        String sql = "DELETE FROM clientes WHERE id = ?";
+//
+//        Connection conn = null;
+//        PreparedStatement pstm = null;
+//
+//        try {
+//
+//            int rowsAffected = pstm.executeUpdate();
+//
+//            if (rowsAffected > 0) {
+//                System.out.println("Cliente deletado com sucesso!");
+//            } else {
+//                System.out.println("Cliente com ID " + id + "não encontrado.");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (pstm != null) {
+//                    pstm.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+        Connection conn = DBConnection.getInstance().getConnection();
         String sql = "DELETE FROM clientes WHERE id = ?";
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
-
         try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
 
-            int rowsAffected = pstm.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Cliente deletado com sucesso!");
             } else {
-                System.out.println("Cliente com ID " + id + "não encontrado.");
+                System.out.println("Cliente com ID " + id + " não encontrado.");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (pstm != null) {
-                    pstm.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
     // método para atualizar cliente
     public void updateCliente(Cliente cliente) {
+        //#region
+//        String sql = "UPDATE clientes SET nome = ?, cpf = ?, endereco = ?, email = ?, senha = ?, dataCadastro = ? WHERE id = ?";
+//
+//        Connection conn = null;
+//        PreparedStatement pstm = null;
+//
+//        try {
+//            conn = ConnectionFactory.createConnectionToMySQL();
+//            pstm = conn.prepareStatement(sql);
+//
+//            pstm.setString(1, cliente.getNome());
+//            pstm.setString(2, cliente.getCpf());
+//            pstm.setString(3, cliente.getEndereco());
+//            pstm.setString(4, cliente.getEmail());
+//            pstm.setString(5, cliente.getSenha());
+//            pstm.setDate(6, new Date(cliente.getDataCadastro().getTime()));
+//            pstm.setInt(7, cliente.getId());
+//
+//            // Executar a query de atualização
+//            int rowsAffected = pstm.executeUpdate();
+//
+//            if (rowsAffected > 0) {
+//                System.out.println("Cliente atualizado com sucesso!");
+//            } else {
+//                System.out.println("Cliente com ID " + cliente.getId() + " não encontrado.");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (pstm != null) {
+//                    pstm.close();
+//                }
+//
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//#endregion
+
+        Connection conn = DBConnection.getInstance().getConnection();
         String sql = "UPDATE clientes SET nome = ?, cpf = ?, endereco = ?, email = ?, senha = ?, dataCadastro = ? WHERE id = ?";
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
-
         try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-            pstm = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-            pstm.setString(1, cliente.getNome());
-            pstm.setString(2, cliente.getCpf());
-            pstm.setString(3, cliente.getEndereco());
-            pstm.setString(4, cliente.getEmail());
-            pstm.setString(5, cliente.getSenha());
-            pstm.setDate(6, new Date(cliente.getDataCadastro().getTime()));
-            pstm.setInt(7, cliente.getId());
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getCpf());
+            ps.setString(3, cliente.getEndereco());
+            ps.setString(4, cliente.getEmail());
+            ps.setString(5, cliente.getSenha());           
+            ps.setInt(6, cliente.getId());
 
-            // Executar a query de atualização
-            int rowsAffected = pstm.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Cliente atualizado com sucesso!");
             } else {
                 System.out.println("Cliente com ID " + cliente.getId() + " não encontrado.");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (pstm != null) {
-                    pstm.close();
-                }
-
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }

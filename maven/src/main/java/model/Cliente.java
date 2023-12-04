@@ -10,9 +10,9 @@ public class Cliente {
     private String endereco;
     private String email;
     private String senha;
-    private Date dataCadastro;
 
-    public Cliente(String nome, String cpf, String endereco, String email, String senha) {
+
+    public Cliente(int id, String nome, String cpf, String endereco, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
@@ -68,13 +68,4 @@ public class Cliente {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public Date getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
 }
