@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: steps.RunCucumberTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.020 s <<< FAILURE! -- in steps.RunCucumberTest
-Cadastro de novo cliente.Cadastrar novo cliente com sucesso -- Time elapsed: 0.001 s <<< FAILURE!
-java.lang.AssertionError
-	at org.junit.Assert.fail(Assert.java:87)
-	at org.junit.Assert.assertTrue(Assert.java:42)
-	at org.junit.Assert.assertTrue(Assert.java:53)
-	at steps.CadastrarClienteTeste.bancoDeDadosDeveSalvarRegistroNovoCliente(CadastrarClienteTeste.java:40)
-	at ✽.o banco de dados deve salvar o registro do novo cliente(file:///D:/Biblioteca/Área%20de%20Trabalho/A3-Gestao-de-Qualidade/maven/src/test/resources/CadastrarCliente.feature:8)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in steps.RunCucumberTest

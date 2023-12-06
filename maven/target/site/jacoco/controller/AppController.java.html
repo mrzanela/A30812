@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">AppController.java</span></div><h1>AppController.java</h1><pre class="source lang-java linenums">package controller;
+
+import dao.ClienteDAO;
+import dao.ProdutoDAO;
+import java.util.List;
+import model.Cliente;
+import view.AppView;
+import view.ClienteView;
+import dao.VendedorDAO;
+import model.Produto;
+import model.Vendedor;
+import view.ProdutoView;
+import view.VendedorView;
+
+/**
+ *
+ * @author Sâmeck
+ */
+public class AppController {
+
+    private List&lt;Cliente&gt; clientes;
+    private ClienteView cv;
+    private ClienteController cc;
+    private Cliente c;
+
+    private List&lt;Vendedor&gt; vendedores;
+    private VendedorView vv;
+    private VendedorController vc;
+    private Vendedor v;
+
+    private List&lt;Produto&gt; produtos;
+    private ProdutoView pv;
+    private ProdutoController pc;
+    private Produto p;
+
+<span class="nc" id="L36">    public AppController() {</span>
+<span class="nc" id="L37">        this.clientes = ClienteDAO.getClientes();</span>
+<span class="nc" id="L38">        this.cv = new ClienteView(clientes);</span>
+<span class="nc" id="L39">        this.cc = new ClienteController(cv, clientes);</span>
+
+<span class="nc" id="L41">        this.vendedores = VendedorDAO.getVendedores();</span>
+<span class="nc" id="L42">        this.vv = new VendedorView(vendedores);</span>
+<span class="nc" id="L43">        this.vc = new VendedorController(vv, vendedores);</span>
+
+<span class="nc" id="L45">        this.produtos = ProdutoDAO.getProdutos();</span>
+<span class="nc" id="L46">        this.pv = new ProdutoView(produtos);</span>
+<span class="nc" id="L47">        this.pc = new ProdutoController(pv, produtos);</span>
+<span class="nc" id="L48">    }</span>
+
+    public void iniciar() {
+<span class="nc" id="L51">        int op = -1;</span>
+        do {
+<span class="nc" id="L53">            op = AppView.menuInicial();</span>
+<span class="nc bnc" id="L54" title="All 14 branches missed.">            switch (op) {</span>
+                case 1: // inserir cliente
+<span class="nc" id="L56">                    boolean status = cc.criaCliente();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L58">                        cv.mostraMsgCriacao();</span>
+
+                    }
+                    break;
+                case 2: // listar clientes
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                    if (!clientes.isEmpty()) {</span>
+<span class="nc" id="L64">                        cv.listarClientes();</span>
+                    } else {
+<span class="nc" id="L66">                        AppView.mostraMsgListaVazia();</span>
+                    }
+<span class="nc" id="L68">                    break;</span>
+                case 3: // Atualizar Cliente
+<span class="nc" id="L70">                    cc.atualizarCliente();</span>
+<span class="nc" id="L71">                    break;</span>
+                case 4: // Excluir um Cliente
+<span class="nc" id="L73">                    boolean deleted = cc.deletaCliente();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                    if (deleted) {</span>
+                    }
+                    break;
+                case 5: // inserir vendedor
+<span class="nc" id="L78">                    status = vc.criaVendedor();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L80">                        vv.mostraMsgCriacao();</span>
+                    }
+                    break;
+                case 6: // listar vendedores
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                    if (!vendedores.isEmpty()) {</span>
+<span class="nc" id="L85">                        vv.listarVendedores();</span>
+                    } else {
+<span class="nc" id="L87">                        AppView.mostraMsgListaVazia();</span>
+                    }
+<span class="nc" id="L89">                    break;</span>
+                case 7: // atualizar vendedor
+<span class="nc" id="L91">                    vc.atualizarVendedor();</span>
+<span class="nc" id="L92">                    break;</span>
+                case 8: // excluir um vendedor
+<span class="nc" id="L94">                    deleted = vc.deletaVendedor();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                    if (deleted) {</span>
+                    }
+                    break;
+                case 9: // inserir produto
+<span class="nc" id="L99">                    status = pc.criaProduto();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L101">                        pv.mostraMsgCriacao();</span>
+                    }
+                    break;
+                case 10: // listar produtos
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                    if (!produtos.isEmpty()) {</span>
+<span class="nc" id="L106">                        pv.listarProdutos();</span>
+                    } else {
+<span class="nc" id="L108">                        AppView.mostraMsgListaVazia();</span>
+                    }
+<span class="nc" id="L110">                    break;</span>
+                case 11: //atualizar produtos
+<span class="nc" id="L112">                    pc.atualizarProduto();</span>
+<span class="nc" id="L113">                    break;</span>
+                case 12: // excluir um produto
+<span class="nc" id="L115">                    deleted = pc.deletaProduto();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">                    if (deleted) {</span>
+                    }
+                    break;
+                case 13: // sair do programa
+<span class="nc" id="L120">                    AppView.mostraMsgFim();</span>
+<span class="nc" id="L121">                    op = -1;</span>
+<span class="nc" id="L122">                    break;</span>
+                default:
+<span class="nc" id="L124">                    AppView.mostraMsgInvalida();</span>
+            }
+
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        } while (op &gt; 0);</span>
+
+<span class="nc" id="L129">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

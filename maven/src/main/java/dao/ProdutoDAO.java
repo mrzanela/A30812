@@ -28,6 +28,8 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
 
     }
@@ -50,6 +52,8 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
         return obj;
 
@@ -68,6 +72,8 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
         return id;
     }
@@ -91,6 +97,8 @@ public class ProdutoDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
 
         return deleted;
@@ -153,16 +161,7 @@ public class ProdutoDAO {
             e.printStackTrace(); // Isso imprime o rastreamento do erro no console
             return false;
         } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DBConnection.getInstance().closeConnection();
         }
     }
 

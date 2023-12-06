@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VendedorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">VendedorController.java</span></div><h1>VendedorController.java</h1><pre class="source lang-java linenums">package controller;
+
+import dao.VendedorDAO;
+import java.util.List;
+import model.Vendedor;
+import view.VendedorView;
+
+/**
+ *
+ * @author Sâmeck
+ */
+public class VendedorController {
+
+    private Vendedor v;
+    private VendedorView vv;
+    private List&lt;Vendedor&gt; vendedores;
+
+<span class="nc" id="L18">    public VendedorController(VendedorView vv, List&lt;Vendedor&gt; vendedores) {</span>
+<span class="nc" id="L19">        this.vv = vv;</span>
+<span class="nc" id="L20">        this.vendedores = vendedores;</span>
+<span class="nc" id="L21">    }</span>
+
+    public boolean criaVendedor() {
+<span class="nc" id="L24">        boolean status = false;</span>
+<span class="nc" id="L25">        int id = VendedorDAO.buscaCodigo() + 1;</span>
+<span class="nc" id="L26">        this.v = vv.inputData(id);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (this.v != null) {</span>
+<span class="nc" id="L28">            vendedores.add(v);</span>
+<span class="nc" id="L29">            VendedorDAO.saveVendedor(v);</span>
+<span class="nc" id="L30">            status = true;</span>
+        }
+<span class="nc" id="L32">        return status;</span>
+    }
+
+    public boolean deletaVendedor() {
+<span class="nc" id="L36">        int id = vv.defineVendedor();</span>
+<span class="nc" id="L37">        boolean deleted = false;</span>
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (id &gt; 0) {</span>
+<span class="nc" id="L40">            VendedorDAO dao = new VendedorDAO(); // Criar uma instância de VendedorDAO</span>
+<span class="nc" id="L41">            deleted = dao.deleteVendedor(id); // Chamar o método de instância deleteVendedor</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (deleted) {</span>
+            }
+<span class="nc" id="L44">        } else {</span>
+<span class="nc" id="L45">            System.out.println(&quot;ID inválido.&quot;);</span>
+        }
+
+<span class="nc" id="L48">        return deleted;</span>
+    }
+
+    public boolean atualizarVendedor() {
+<span class="nc" id="L52">        Vendedor vendedorParaAtualizar = vv.inputDataForUpdate();</span>
+<span class="nc" id="L53">        boolean atualizado = atualizarVendedorNoBanco(vendedorParaAtualizar);</span>
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (atualizado) {</span>
+<span class="nc" id="L56">            System.out.println(&quot;Vendedor atualizado com sucesso!&quot;);</span>
+        } else {
+<span class="nc" id="L58">            System.out.println(&quot;Falha ao atualizar o vendedor.&quot;);</span>
+        }
+<span class="nc" id="L60">        return atualizado;</span>
+    }
+
+    private boolean atualizarVendedorNoBanco(Vendedor vendedor) {
+<span class="nc" id="L64">        VendedorDAO vendedorDAO = new VendedorDAO();</span>
+<span class="nc" id="L65">        return vendedorDAO.atualizarVendedor(vendedor);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

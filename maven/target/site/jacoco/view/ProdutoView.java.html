@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProdutoView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">ProdutoView.java</span></div><h1>ProdutoView.java</h1><pre class="source lang-java linenums">package view;
+
+import java.util.List;
+import java.util.Scanner;
+import model.Produto;
+
+/**
+ *
+ * @author Sâmeck
+ */
+public class ProdutoView {
+    private Scanner scan;
+    private List&lt;Produto&gt; produtos;
+    
+    /**
+     * Costrutor da Classe Produto
+     *
+     * @param produtos
+     */
+<span class="nc" id="L20">    public ProdutoView(List&lt;Produto&gt; produtos) {</span>
+<span class="nc" id="L21">        this.produtos = produtos;</span>
+<span class="nc" id="L22">        this.scan = new Scanner(System.in);</span>
+<span class="nc" id="L23">    }</span>
+
+    /**
+     * Listar os produtos cadastrados
+     */
+    public void listarProdutos() {
+<span class="nc" id="L29">        System.out.println(&quot;---------------------------&quot;);</span>
+<span class="nc" id="L30">        System.out.println(&quot;Produtos: &quot;);</span>
+<span class="nc" id="L31">        System.out.println(&quot;---------------------------&quot;);</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (Produto v : this.produtos) {</span>
+<span class="nc" id="L34">            System.out.println(v.toString());</span>
+<span class="nc" id="L35">            System.out.println(&quot;---------------------------&quot;);</span>
+<span class="nc" id="L36">        }</span>
+<span class="nc" id="L37">    }</span>
+
+    /**
+     * Entrar com os dados do Produto
+     *
+     * @param i - representa o id
+     * @return Produto
+     */
+    public Produto inputData(int i) {
+
+<span class="nc" id="L47">        this.scan = new Scanner(System.in);</span>
+<span class="nc" id="L48">        System.out.println(&quot;Informe o nome do produto &quot; + i + &quot;: &quot;);</span>
+<span class="nc" id="L49">        String nome = scan.nextLine();</span>
+
+<span class="nc" id="L51">        System.out.println(&quot;Informe o preço do produto &quot; + i + &quot;: &quot;);</span>
+<span class="nc" id="L52">        double preco = scan.nextDouble();</span>
+
+<span class="nc" id="L54">        System.out.println(&quot;Informe a quantidade do produto &quot; + i + &quot;: &quot;);</span>
+<span class="nc" id="L55">        int qtd = scan.nextInt();</span>
+
+<span class="nc" id="L57">        return new Produto(i, nome, preco, qtd);</span>
+    }
+
+    /**
+     * Exibir msg de confirmação de criação do Produto
+     */
+    public void mostraMsgCriacao() {
+<span class="nc" id="L64">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L65">        System.out.println(&quot;Produto criado com sucesso!&quot;);</span>
+<span class="nc" id="L66">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Define o Produto pelo id
+     *
+     * @return id
+     */
+    public int defineProduto() {
+<span class="nc" id="L75">        System.out.println(&quot;Informe o id do Produto: &quot;);</span>
+<span class="nc" id="L76">        return scan.nextInt();</span>
+    }
+
+    /**
+     * Exibir msg de confirmação de deleção do Produto
+     */
+    public void mostraMsgDelecao() {
+
+<span class="nc" id="L84">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L85">        System.out.println(&quot;Produto deletado com sucesso!&quot;);</span>
+<span class="nc" id="L86">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L87">    }</span>
+
+    public void mostraMsgProdutoNaoEncontrado() {
+<span class="nc" id="L90">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L91">        System.out.println(&quot;Produto não encontrado e/ou não existente&quot;);</span>
+<span class="nc" id="L92">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L93">    }</span>
+
+    public Produto inputDataForUpdate() {
+<span class="nc" id="L96">        System.out.println(&quot;Informe o ID do Produto que deseja atualizar:&quot;);</span>
+<span class="nc" id="L97">        int id = scan.nextInt();</span>
+<span class="nc" id="L98">        scan.nextLine(); // Limpar o buffer do scanner</span>
+
+        // Captura as informações visuais do cliente para atualização
+<span class="nc" id="L101">        Produto produto = new Produto();</span>
+<span class="nc" id="L102">        produto.setId(id);</span>
+
+<span class="nc" id="L104">        System.out.println(&quot;Qual campo deseja atualizar?&quot;);</span>
+<span class="nc" id="L105">        System.out.println(&quot;1. Nome.&quot;);</span>
+<span class="nc" id="L106">        System.out.println(&quot;2. Preco.&quot;);</span>
+<span class="nc" id="L107">        System.out.println(&quot;3. Quantidade.&quot;);        </span>
+<span class="nc" id="L108">        int opcao = scan.nextInt();</span>
+<span class="nc" id="L109">        scan.nextLine(); // Limpar o buffer do scanner</span>
+
+<span class="nc bnc" id="L111" title="All 4 branches missed.">        switch (opcao) {</span>
+            case 1:
+<span class="nc" id="L113">                System.out.println(&quot;Digite o novo nome:&quot;);</span>
+<span class="nc" id="L114">                String novoNome = scan.nextLine();</span>
+<span class="nc" id="L115">                produto.setNome(novoNome);</span>
+<span class="nc" id="L116">                scan.nextLine(); // Limpar o buffer do scanner</span>
+<span class="nc" id="L117">                break;</span>
+            case 2:
+<span class="nc" id="L119">                System.out.println(&quot;Digite o novo Preco:&quot;);</span>
+<span class="nc" id="L120">                double novoPreco = scan.nextDouble();</span>
+<span class="nc" id="L121">                produto.setPreco(novoPreco);</span>
+<span class="nc" id="L122">                scan.nextLine(); // Limpar o buffer do scanner</span>
+<span class="nc" id="L123">                break;</span>
+            case 3:
+<span class="nc" id="L125">                System.out.println(&quot;Digite a nova quantidade:&quot;);</span>
+<span class="nc" id="L126">                int novaQtd = scan.nextInt();</span>
+<span class="nc" id="L127">                produto.setQtd(novaQtd);</span>
+<span class="nc" id="L128">                break;          </span>
+            default:
+<span class="nc" id="L130">                System.out.println(&quot;Opção inválida.&quot;);</span>
+                break;
+        }
+
+<span class="nc" id="L134">        return produto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

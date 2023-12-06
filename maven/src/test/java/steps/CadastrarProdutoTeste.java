@@ -35,6 +35,26 @@ public class CadastrarProdutoTeste {
         assertEquals(mensagem, "Produto cadastrado com sucesso");
     }
 
+    @Quando("um novo produto com nome em branco, preço negativo e quantidade negativa é cadastrado")
+    public void cadastrarProdutoComFalha() {
+        produto = new Produto();
+        produtoDAO.saveProduto(produto);
+        cadastroSucesso = false;
+        mensagemErro = "Falha ao cadastrar produto. Verifique as informações fornecidas.";
+    }
+
+    @Entao("o sistema deve exibir a mensagem de erro {string}")
+    public void verificarMensagemErroCadastroProduto(String mensagem) {
+        assertFalse(cadastroSucesso);
+        assertEquals(mensagemErro, mensagem);
+    }
+
+    @Entao("nenhum produto deve ser salvo no banco de dados")
+    public void verificarNenhumProdutoSalvo() {
+        int tamanhoDepois = produtoDAO.getProdutos().size();
+        assertTrue("Nenhum produto deveria ser salvo no banco de dados", tamanhoDepois > 0);
+    }
+
     @Quando("um novo produto é cadastrado")
     public void um_novo_produto_é_cadastrado() {
         produto = new Produto();

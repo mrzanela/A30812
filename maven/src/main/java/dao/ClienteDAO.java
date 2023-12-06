@@ -15,9 +15,10 @@ public class ClienteDAO {
 
     public static void saveCliente(Cliente c) {
         Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = null;
         try {
             String sql = "insert into clientes (id, nome, cpf, endereco, email, senha) values (?, ?, ?,?,?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, c.getId());
             ps.setString(2, c.getNome());
             ps.setString(3, c.getCpf());
@@ -30,6 +31,8 @@ public class ClienteDAO {
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+             DBConnection.getInstance().closeConnection();
         }
 
     }
@@ -37,11 +40,13 @@ public class ClienteDAO {
     public static List<Cliente> getClientes() {
 
         Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
         List<Cliente> obj = new ArrayList<>();
         try {
             String sql = "select * from clientes";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
+            ps = conn.prepareStatement(sql);
+            resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Cliente tmp = new Cliente(resultSet.getInt("id"), resultSet.getString("nome"),
                         resultSet.getString("cpf"), resultSet.getString("endereco"),
@@ -52,6 +57,8 @@ public class ClienteDAO {
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
         return obj;
 
@@ -59,17 +66,21 @@ public class ClienteDAO {
 
     public static int buscaCodigo() {
         Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
         int id = 0;
         try {
             String sql = "select max(id) from clientes";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
+            ps = conn.prepareStatement(sql);
+            resultSet = ps.executeQuery();
             resultSet.next();
             id = resultSet.getInt(1);
 
         } catch (SQLException e) {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
         return id;
     }
@@ -93,6 +104,8 @@ public class ClienteDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.getInstance().closeConnection();
         }
 
         return deleted;
@@ -156,16 +169,7 @@ public class ClienteDAO {
             e.printStackTrace(); // Isso imprime o rastreamento do erro no console
             return false;
         } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            DBConnection.getInstance().closeConnection();
         }
     }
 

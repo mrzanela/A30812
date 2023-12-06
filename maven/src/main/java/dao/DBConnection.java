@@ -14,8 +14,6 @@ public class DBConnection {
     private Connection conn = null;
     private String url = "jdbc:mysql://localhost:3306/";
     private String dbName = "marketplace";
-    private String driver = "com.mysql.jdbc.Driver";
-    private String driverManager = null;
 
     private DBConnection() {
         try {

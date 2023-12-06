@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Vendedor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Vendedor.java</span></div><h1>Vendedor.java</h1><pre class="source lang-java linenums">package model;
+
+public class Vendedor {
+
+    private int id;
+    private String nome;
+    private String cnpj;
+    private String endereco;
+    private String email;
+    private String senha;
+
+<span class="fc" id="L12">    public Vendedor() {</span>
+<span class="fc" id="L13">    }</span>
+
+<span class="fc" id="L15">    public Vendedor(int id, String nome, String cnpj, String endereco, String email, String senha) {</span>
+<span class="fc" id="L16">        this.id = id;</span>
+<span class="fc" id="L17">        this.nome = nome;</span>
+<span class="fc" id="L18">        this.cnpj = cnpj;</span>
+<span class="fc" id="L19">        this.endereco = endereco;</span>
+<span class="fc" id="L20">        this.email = email;</span>
+<span class="fc" id="L21">        this.senha = senha;</span>
+<span class="fc" id="L22">    }</span>
+
+<span class="nc" id="L24">    public Vendedor(String nome, String cnpj, String email, String senha) {</span>
+<span class="nc" id="L25">        this.nome = nome;</span>
+<span class="nc" id="L26">        this.cnpj = cnpj;</span>
+<span class="nc" id="L27">        this.email = email;</span>
+<span class="nc" id="L28">        this.senha = senha;</span>
+<span class="nc" id="L29">    }</span>
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L33">        return &quot;Vendedor{&quot; +          </span>
+                &quot;nome='&quot; + nome + '\'' +
+                &quot;, cnpj='&quot; + cnpj + '\'' +
+                &quot;, endereco='&quot; + endereco + '\'' +
+                &quot;, email='&quot; + email + '\'' +
+                &quot;, senha='&quot; + senha + '\'' +
+                '}';
+    }
+
+    public int getId() {
+<span class="fc" id="L43">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L47">        this.id = id;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getNome() {
+<span class="fc" id="L51">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="fc" id="L55">        this.nome = nome;</span>
+<span class="fc" id="L56">    }</span>
+
+    public String getCnpj() {
+<span class="fc" id="L59">        return cnpj;</span>
+    }
+
+    public void setCnpj(String cnpj) {
+<span class="fc" id="L63">        this.cnpj = cnpj;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getEndereco() {
+<span class="fc" id="L67">        return endereco;</span>
+    }
+
+    public void setEndereco(String endereco) {
+<span class="fc" id="L71">        this.endereco = endereco;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L75">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L79">        this.email = email;</span>
+<span class="fc" id="L80">    }</span>
+
+    public String getSenha() {
+<span class="fc" id="L83">        return senha;</span>
+    }
+
+    public void setSenha(String senha) {
+<span class="fc" id="L87">        this.senha = senha;</span>
+<span class="fc" id="L88">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

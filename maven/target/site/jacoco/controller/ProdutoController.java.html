@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProdutoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">ProdutoController.java</span></div><h1>ProdutoController.java</h1><pre class="source lang-java linenums">package controller;
+
+import dao.ProdutoDAO;
+import java.util.List;
+import model.Produto;
+import view.ProdutoView;
+
+/**
+ *
+ * @author Sâmeck
+ */
+public class ProdutoController {
+    private Produto p;
+    private ProdutoView pv;
+    private List&lt;Produto&gt; produtos;
+
+<span class="nc" id="L17">    public ProdutoController(ProdutoView pv, List&lt;Produto&gt; produtos) {</span>
+<span class="nc" id="L18">        this.pv = pv;</span>
+<span class="nc" id="L19">        this.produtos = produtos;</span>
+<span class="nc" id="L20">    }</span>
+
+    public boolean criaProduto() {
+<span class="nc" id="L23">        boolean status = false;</span>
+<span class="nc" id="L24">        int id = ProdutoDAO.buscaCodigo() + 1;</span>
+<span class="nc" id="L25">        this.p = pv.inputData(id);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (this.p != null) {</span>
+<span class="nc" id="L27">            produtos.add(p);</span>
+<span class="nc" id="L28">            ProdutoDAO.saveProduto(p);</span>
+<span class="nc" id="L29">            status = true;</span>
+        }
+<span class="nc" id="L31">        return status;</span>
+    }
+
+    public boolean deletaProduto() {
+<span class="nc" id="L35">        int id = pv.defineProduto();</span>
+<span class="nc" id="L36">        boolean deleted = false;</span>
+
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (id &gt; 0) {</span>
+<span class="nc" id="L39">            ProdutoDAO dao = new ProdutoDAO(); // Criar uma instância de ProdutoDAO</span>
+<span class="nc" id="L40">            deleted = dao.deleteProduto(id); // Chamar o método de instância deleteVendedor</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (deleted) {</span>
+            }
+<span class="nc" id="L43">        } else {</span>
+<span class="nc" id="L44">            System.out.println(&quot;ID inválido.&quot;);</span>
+        }
+
+<span class="nc" id="L47">        return deleted;</span>
+    }
+
+    public boolean atualizarProduto() {
+<span class="nc" id="L51">        Produto produtoParaAtualizar = pv.inputDataForUpdate();</span>
+<span class="nc" id="L52">        boolean atualizado = atualizarProdutoNoBanco(produtoParaAtualizar);</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (atualizado) {</span>
+<span class="nc" id="L55">            System.out.println(&quot;Produto atualizado com sucesso!&quot;);</span>
+        } else {
+<span class="nc" id="L57">            System.out.println(&quot;Falha ao atualizar o Produto.&quot;);</span>
+        }
+<span class="nc" id="L59">        return atualizado;</span>
+    }
+
+    private boolean atualizarProdutoNoBanco(Produto produto) {
+<span class="nc" id="L63">       ProdutoDAO produtoDAO = new ProdutoDAO();</span>
+<span class="nc" id="L64">        return produtoDAO.atualizarProduto(produto);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

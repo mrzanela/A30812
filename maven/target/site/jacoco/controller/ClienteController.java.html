@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">ClienteController.java</span></div><h1>ClienteController.java</h1><pre class="source lang-java linenums">package controller;
+
+import dao.ClienteDAO;
+import dao.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import model.Cliente;
+import view.ClienteView;
+
+/**
+ *
+ * @author Sâmeck
+ */
+public class ClienteController {
+
+    private Cliente c;
+    private ClienteView cv;
+    private List&lt;Cliente&gt; clientes;
+
+<span class="nc" id="L23">    public ClienteController(ClienteView cv, List&lt;Cliente&gt; clientes) {</span>
+<span class="nc" id="L24">        this.cv = cv;</span>
+<span class="nc" id="L25">        this.clientes = clientes;</span>
+<span class="nc" id="L26">    }</span>
+
+    public boolean criaCliente() {
+<span class="nc" id="L29">        boolean status = false;</span>
+<span class="nc" id="L30">        int id = ClienteDAO.buscaCodigo() + 1;</span>
+<span class="nc" id="L31">        this.c = cv.inputData(id);</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (this.c != null) {</span>
+<span class="nc" id="L33">            clientes.add(c);</span>
+<span class="nc" id="L34">            ClienteDAO.saveCliente(c);</span>
+<span class="nc" id="L35">            status = true;</span>
+        }
+<span class="nc" id="L37">        return status;</span>
+    }
+
+    public boolean deletaCliente() {
+<span class="nc" id="L41">        int id = cv.defineCliente();</span>
+<span class="nc" id="L42">        boolean deleted = false;</span>
+
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (id &gt; 0) {</span>
+<span class="nc" id="L45">            ClienteDAO dao = new ClienteDAO(); // Criar uma instância de ClienteDAO</span>
+<span class="nc" id="L46">            deleted = dao.deleteCliente(id); // Chamar o método de instância deleteCliente</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (deleted) {        </span>
+            }
+<span class="nc" id="L49">        } else {</span>
+<span class="nc" id="L50">            System.out.println(&quot;ID inválido.&quot;);</span>
+        }
+
+<span class="nc" id="L53">        return deleted;</span>
+    }
+
+//    public int buscaIdClientePorId(int id) {
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        int clienteId = -1; // Valor padrão para indicar que o cliente não foi encontrado
+//
+//        try {
+//            conn = DBConnection.getInstance().getConnection();
+//            String sql = &quot;SELECT id FROM clientes WHERE id = ?&quot;;
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                clienteId = rs.getInt(&quot;id&quot;);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return clienteId;
+//    }
+
+    public boolean atualizarCliente() {
+<span class="nc" id="L94">        Cliente clienteParaAtualizar = cv.inputDataForUpdate();</span>
+<span class="nc" id="L95">        boolean atualizado = atualizarClienteNoBanco(clienteParaAtualizar);</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (atualizado) {</span>
+<span class="nc" id="L98">            System.out.println(&quot;Cliente atualizado com sucesso!&quot;);</span>
+        } else {
+<span class="nc" id="L100">            System.out.println(&quot;Falha ao atualizar o cliente.&quot;);</span>
+        }
+<span class="nc" id="L102">        return atualizado;</span>
+    }
+
+    private boolean atualizarClienteNoBanco(Cliente cliente) {
+<span class="nc" id="L106">        ClienteDAO clienteDAO = new ClienteDAO();</span>
+<span class="nc" id="L107">        return clienteDAO.atualizarCliente(cliente);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
