@@ -5,24 +5,15 @@ import dao.DBConnection;
 import dao.ProdutoDAO;
 import dao.VendedorDAO;
 import org.junit.Test;
-
-import aplicacao.Main;
-
 import static org.junit.Assert.*;
-
 import model.Cliente;
 import model.Produto;
 import view.AppView;
-
 import java.io.ByteArrayInputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import model.Vendedor;
-
-import static org.junit.Assert.*;
-
-import java.io.ByteArrayOutputStream;
+import view.ProdutoView;
 
 public class TesteAplicacao {
 
@@ -187,5 +178,23 @@ public class TesteAplicacao {
 
         assertNotNull(produtos);
         assertTrue(produtos.size() >= 0);
+    }
+
+    @Test
+    public void testMostraMsgProdutoNaoEncontrado() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgProdutoNaoEncontrado();
+    }
+
+    @Test
+    public void testMostraMsgDelecao() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgDelecao();
+    }
+
+    @Test
+    public void testMostraMsgCriacao() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgCriacao();
     }
 }
