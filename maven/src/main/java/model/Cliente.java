@@ -18,10 +18,19 @@ public class Cliente {
         this.senha = senha;
     }
     public Cliente(){}
+
+    public Cliente(String nome, String cpf, String endereco, String email, String senha) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.email = email;
+        this.senha = senha;
+    }
+    
     
     @Override
     public String toString() {
-        return "Cliente{" +          
+        return "Cliente{" +                 
                 "nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", endereco='" + endereco + '\'' +

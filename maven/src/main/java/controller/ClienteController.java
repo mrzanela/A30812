@@ -1,10 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dao.ClienteDAO;
+import dao.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import model.Cliente;
 import view.ClienteView;
@@ -36,26 +37,74 @@ public class ClienteController {
         return status;
     }
 
-    public boolean deletaCliente(int id) {
-        boolean status = false;
-        // Verifica se o ID do cliente existe na lista de clientes
-        Cliente clienteParaDeletar = null;
-        for (Cliente cliente : clientes) {
-            if (cliente.getId() == id) {
-                clienteParaDeletar = cliente;
-                break;
+    public boolean deletaCliente() {
+        int id = cv.defineCliente();
+        boolean deleted = false;
+
+        if (id > 0) {
+            ClienteDAO dao = new ClienteDAO(); // Criar uma instância de ClienteDAO
+            deleted = dao.deleteCliente(id); // Chamar o método de instância deleteCliente
+            if (deleted) {        
             }
+        } else {
+            System.out.println("ID inválido.");
         }
 
-        if (clienteParaDeletar != null) {
-            // Remove da lista
-            clientes.remove(clienteParaDeletar);
-            // Remove do banco de dados
-            ClienteDAO.deleteCliente(id);
-            status = true;
-        }
+        return deleted;
+    }
 
-        return status;
+//    public int buscaIdClientePorId(int id) {
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        int clienteId = -1; // Valor padrão para indicar que o cliente não foi encontrado
+//
+//        try {
+//            conn = DBConnection.getInstance().getConnection();
+//            String sql = "SELECT id FROM clientes WHERE id = ?";
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                clienteId = rs.getInt("id");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return clienteId;
+//    }
+
+    public boolean atualizarCliente() {
+        Cliente clienteParaAtualizar = cv.inputDataForUpdate();
+        boolean atualizado = atualizarClienteNoBanco(clienteParaAtualizar);
+
+        if (atualizado) {
+            System.out.println("Cliente atualizado com sucesso!");
+        } else {
+            System.out.println("Falha ao atualizar o cliente.");
+        }
+        return atualizado;
+    }
+
+    private boolean atualizarClienteNoBanco(Cliente cliente) {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        return clienteDAO.atualizarCliente(cliente);
     }
 
 }

@@ -1,13 +1,14 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 //import factory.ConnectionFactory;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import model.Cliente;
 
 public class ClienteDAO {
@@ -74,94 +75,98 @@ public class ClienteDAO {
     }
 
 // método para deletar cliente
-    public static void deleteCliente(int id) {
-        Connection conn = DBConnection.getInstance().getConnection();
+    public boolean deleteCliente(int id) {
         String sql = "DELETE FROM clientes WHERE id = ?";
+        boolean deleted = false;
 
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(0, id);
-            System.out.println("Query SQL: " + ps); // Imprime a query SQL sendo executada
+        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
 
-            int rowsAffected = ps.executeUpdate();
+            pstm.setInt(1, id);
+
+            int rowsAffected = pstm.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Cliente deletado com sucesso!");
+                deleted = true;
             } else {
                 System.out.println("Cliente com ID " + id + " não encontrado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return deleted;
     }
 
     // método para atualizar cliente
-    public void updateCliente(Cliente cliente) {
-        //#region
-//        String sql = "UPDATE clientes SET nome = ?, cpf = ?, endereco = ?, email = ?, senha = ?, dataCadastro = ? WHERE id = ?";
-//
-//        Connection conn = null;
-//        PreparedStatement pstm = null;
-//
-//        try {
-//            conn = ConnectionFactory.createConnectionToMySQL();
-//            pstm = conn.prepareStatement(sql);
-//
-//            pstm.setString(1, cliente.getNome());
-//            pstm.setString(2, cliente.getCpf());
-//            pstm.setString(3, cliente.getEndereco());
-//            pstm.setString(4, cliente.getEmail());
-//            pstm.setString(5, cliente.getSenha());
-//            pstm.setDate(6, new Date(cliente.getDataCadastro().getTime()));
-//            pstm.setInt(7, cliente.getId());
-//
-//            // Executar a query de atualização
-//            int rowsAffected = pstm.executeUpdate();
-//
-//            if (rowsAffected > 0) {
-//                System.out.println("Cliente atualizado com sucesso!");
-//            } else {
-//                System.out.println("Cliente com ID " + cliente.getId() + " não encontrado.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (pstm != null) {
-//                    pstm.close();
-//                }
-//
-//                if (conn != null) {
-//                    conn.close();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//#endregion
-        Connection conn = DBConnection.getInstance().getConnection();
-        String sql = "UPDATE clientes SET nome = ?, cpf = ?, endereco = ?, email = ?, senha = ?, dataCadastro = ? WHERE id = ?";
+    public boolean atualizarCliente(Cliente cliente) {
+        String sql = "UPDATE clientes SET ";
+        Connection conn = null;
+        PreparedStatement ps = null;
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            conn = DBConnection.getInstance().getConnection();
+            int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados
+            HashMap<String, String> fieldsToUpdate = new HashMap<>(); // Armazena os campos a serem atualizados
 
-            ps.setString(1, cliente.getNome());
-            ps.setString(2, cliente.getCpf());
-            ps.setString(3, cliente.getEndereco());
-            ps.setString(4, cliente.getEmail());
-            ps.setString(5, cliente.getSenha());
-            ps.setInt(6, cliente.getId());
+            // Adicione todos os campos que deseja permitir a atualização
+            if (cliente.getNome() != null) {
+                fieldsToUpdate.put("nome", cliente.getNome());
+            }
+            if (cliente.getCpf() != null) {
+                fieldsToUpdate.put("cpf", cliente.getCpf());
+            }
+            if (cliente.getEndereco() != null) {
+                fieldsToUpdate.put("endereco", cliente.getEndereco());
+            }
+            if (cliente.getEmail() != null) {
+                fieldsToUpdate.put("email", cliente.getEmail());
+            }
+            if (cliente.getSenha() != null) {
+                fieldsToUpdate.put("senha", cliente.getSenha());
+            }
+
+            for (Map.Entry<String, String> entry : fieldsToUpdate.entrySet()) {
+                if (numberOfFields > 0) {
+                    sql += ",";
+                }
+                sql += entry.getKey() + " = ?";
+                numberOfFields++;
+            }
+
+            sql += " WHERE id = ?"; // Adicione a cláusula WHERE
+
+            ps = conn.prepareStatement(sql);
+
+            int parameterIndex = 1; // Índice para os parâmetros na declaração SQL
+
+            for (Map.Entry<String, String> entry : fieldsToUpdate.entrySet()) {
+                ps.setString(parameterIndex, entry.getValue());
+                parameterIndex++;
+            }
+
+            // Adicione o ID do cliente
+            ps.setInt(parameterIndex, cliente.getId());
 
             int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Cliente atualizado com sucesso!");
-            } else {
-                System.out.println("Cliente com ID " + cliente.getId() + " não encontrado.");
-            }
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ocorreu um erro ao atualizar o cliente:");
+            System.err.println("Mensagem de erro: " + e.getMessage());
+            e.printStackTrace(); // Isso imprime o rastreamento do erro no console
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 }
