@@ -9,13 +9,68 @@ import static org.junit.Assert.*;
 import model.Cliente;
 import model.Produto;
 import view.AppView;
+import view.ClienteView;
+import view.ProdutoView;
+import view.VendedorView;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import model.Vendedor;
-import view.ProdutoView;
 
 public class TesteAplicacao {
+
+    @Test
+    public void testMostraMsgVendedorNaoEncontrado() {
+        VendedorView vendedorView = new VendedorView(null);
+        vendedorView.mostraMsgVendedorNaoEncontrado();
+    }
+
+    @Test
+    public void testMostraMsgDelecaoParaVendedor() {
+        VendedorView vendedorView = new VendedorView(null);
+        vendedorView.mostraMsgDelecao();
+    }
+
+    @Test
+    public void testMostraMsgCriacaoVendedor() {
+        VendedorView vendedorView = new VendedorView(null);
+        vendedorView.mostraMsgCriacao();
+    }
+
+    @Test
+    public void testMostraMsgClienteNaoEncontrado() {
+        ClienteView clienteView = new ClienteView(null);
+    }
+
+    @Test
+    public void testMostraMsgDelecaoParaCliente() {
+        ClienteView clienteView = new ClienteView(null);
+        clienteView.mostraMsgDelecao();
+    }
+
+    @Test
+    public void testMostraMsgCriacaoParaCliente() {
+        ClienteView clienteView = new ClienteView(null);
+        clienteView.mostraMsgCriacao();
+    }
+
+    @Test
+    public void testMostraMsgProdutoNaoEncontrado() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgProdutoNaoEncontrado();
+    }
+
+    @Test
+    public void testMostraMsgDelecao() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgDelecao();
+    }
+
+    @Test
+    public void testMostraMsgCriacao() {
+        ProdutoView produtoView = new ProdutoView(null);
+        produtoView.mostraMsgCriacao();
+    }
 
     @Test
     public void testDeleteProduto() {
@@ -178,23 +233,5 @@ public class TesteAplicacao {
 
         assertNotNull(produtos);
         assertTrue(produtos.size() >= 0);
-    }
-
-    @Test
-    public void testMostraMsgProdutoNaoEncontrado() {
-        ProdutoView produtoView = new ProdutoView(null);
-        produtoView.mostraMsgProdutoNaoEncontrado();
-    }
-
-    @Test
-    public void testMostraMsgDelecao() {
-        ProdutoView produtoView = new ProdutoView(null);
-        produtoView.mostraMsgDelecao();
-    }
-
-    @Test
-    public void testMostraMsgCriacao() {
-        ProdutoView produtoView = new ProdutoView(null);
-        produtoView.mostraMsgCriacao();
     }
 }
