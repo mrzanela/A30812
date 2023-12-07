@@ -12,6 +12,7 @@ public class Vendedor {
     public Vendedor() {
     }
 
+    // Construtor que inicializa todos os campos
     public Vendedor(int id, String nome, String cnpj, String endereco, String email, String senha) {
         this.id = id;
         this.nome = nome;
@@ -21,24 +22,26 @@ public class Vendedor {
         this.senha = senha;
     }
 
+    // Construtor que não inclui id
     public Vendedor(String nome, String cnpj, String email, String senha) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
         this.senha = senha;
     }
-    
+
     @Override
     public String toString() {
-        return "Vendedor{" +          
-                "nome='" + nome + '\'' +
-                ", cnpj='" + cnpj + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
+        return "Vendedor{"
+                + "nome='" + nome + '\''
+                + ", cnpj='" + cnpj + '\''
+                + ", endereco='" + endereco + '\''
+                + ", email='" + email + '\''
+                + ", senha='" + senha + '\''
+                + '}';
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }

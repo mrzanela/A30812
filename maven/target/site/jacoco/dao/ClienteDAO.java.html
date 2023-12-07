@@ -5,171 +5,195 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-//import factory.ConnectionFactory;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import model.Cliente;
 
-<span class="fc" id="L14">public class ClienteDAO {</span>
+/**
+ * Classe que fornece métodos de acesso a dados para a entidade Cliente.
+ * Interage com o banco de dados para salvar, recuperar, buscar códigos, deletar
+ * e atualizar clientes.
+ * Utiliza DBConnection para gerenciar a conexão com o banco de dados.
+ * Utilizada pelo ClienteController.
+ * 
+ * @author Sâmeck
+ */
 
+<span class="fc" id="L23">public class ClienteDAO {</span>
+
+    /**
+     * Salva um cliente no banco de dados.
+     *
+     * @param c O objeto Cliente a ser salvo.
+     */
     public static void saveCliente(Cliente c) {
-<span class="nc" id="L17">        Connection conn = DBConnection.getInstance().getConnection();</span>
-<span class="nc" id="L18">        PreparedStatement ps = null;</span>
+<span class="fc" id="L31">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L32">        PreparedStatement ps = null;</span>
         try {
-<span class="nc" id="L20">            String sql = &quot;insert into clientes (id, nome, cpf, endereco, email, senha) values (?, ?, ?,?,?, ?)&quot;;</span>
-<span class="nc" id="L21">            ps = conn.prepareStatement(sql);</span>
-<span class="nc" id="L22">            ps.setInt(1, c.getId());</span>
-<span class="nc" id="L23">            ps.setString(2, c.getNome());</span>
-<span class="nc" id="L24">            ps.setString(3, c.getCpf());</span>
-<span class="nc" id="L25">            ps.setString(4, c.getEndereco());</span>
-<span class="nc" id="L26">            ps.setString(5, c.getEmail());</span>
-<span class="nc" id="L27">            ps.setString(6, c.getSenha());</span>
+<span class="fc" id="L34">            String sql = &quot;insert into clientes (id, nome, cpf, endereco, email, senha) values (?, ?, ?,?,?, ?)&quot;;</span>
+<span class="fc" id="L35">            ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L36">            ps.setInt(1, c.getId());</span>
+<span class="fc" id="L37">            ps.setString(2, c.getNome());</span>
+<span class="fc" id="L38">            ps.setString(3, c.getCpf());</span>
+<span class="fc" id="L39">            ps.setString(4, c.getEndereco());</span>
+<span class="fc" id="L40">            ps.setString(5, c.getEmail());</span>
+<span class="fc" id="L41">            ps.setString(6, c.getSenha());</span>
 
-<span class="nc" id="L29">            ps.executeUpdate();</span>
+<span class="fc" id="L43">            ps.executeUpdate();</span>
 
-<span class="nc" id="L31">        } catch (SQLException e) {</span>
-<span class="nc" id="L32">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L33">            e.printStackTrace();</span>
+<span class="nc" id="L45">        } catch (SQLException e) {</span>
+<span class="nc" id="L46">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L47">            e.printStackTrace();</span>
         } finally {
-<span class="nc" id="L35">             DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L49">            DBConnection.getInstance().closeConnection();</span>
         }
 
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L52">    }</span>
 
+    /**
+     * Obtém a lista de todos os clientes do banco de dados.
+     *
+     * @return Uma lista de objetos Cliente.
+     */
     public static List&lt;Cliente&gt; getClientes() {
 
-<span class="fc" id="L42">        Connection conn = DBConnection.getInstance().getConnection();</span>
-<span class="fc" id="L43">        PreparedStatement ps = null;</span>
-<span class="fc" id="L44">        ResultSet resultSet = null;</span>
-<span class="fc" id="L45">        List&lt;Cliente&gt; obj = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L61">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L62">        PreparedStatement ps = null;</span>
+<span class="fc" id="L63">        ResultSet resultSet = null;</span>
+<span class="fc" id="L64">        List&lt;Cliente&gt; obj = new ArrayList&lt;&gt;();</span>
         try {
-<span class="fc" id="L47">            String sql = &quot;select * from clientes&quot;;</span>
-<span class="fc" id="L48">            ps = conn.prepareStatement(sql);</span>
-<span class="fc" id="L49">            resultSet = ps.executeQuery();</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">            while (resultSet.next()) {</span>
-<span class="fc" id="L51">                Cliente tmp = new Cliente(resultSet.getInt(&quot;id&quot;), resultSet.getString(&quot;nome&quot;),</span>
-<span class="fc" id="L52">                        resultSet.getString(&quot;cpf&quot;), resultSet.getString(&quot;endereco&quot;),</span>
-<span class="fc" id="L53">                        resultSet.getString(&quot;email&quot;), resultSet.getString(&quot;senha&quot;));</span>
-<span class="fc" id="L54">                obj.add(tmp);</span>
-<span class="fc" id="L55">            }</span>
+<span class="fc" id="L66">            String sql = &quot;select * from clientes&quot;;</span>
+<span class="fc" id="L67">            ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L68">            resultSet = ps.executeQuery();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L70">                Cliente tmp = new Cliente(resultSet.getInt(&quot;id&quot;), resultSet.getString(&quot;nome&quot;),</span>
+<span class="fc" id="L71">                        resultSet.getString(&quot;cpf&quot;), resultSet.getString(&quot;endereco&quot;),</span>
+<span class="fc" id="L72">                        resultSet.getString(&quot;email&quot;), resultSet.getString(&quot;senha&quot;));</span>
+<span class="fc" id="L73">                obj.add(tmp);</span>
+<span class="fc" id="L74">            }</span>
 
-<span class="nc" id="L57">        } catch (SQLException e) {</span>
-<span class="nc" id="L58">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L59">            e.printStackTrace();</span>
+<span class="nc" id="L76">        } catch (SQLException e) {</span>
+<span class="nc" id="L77">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L78">            e.printStackTrace();</span>
         } finally {
-<span class="fc" id="L61">            DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L80">            DBConnection.getInstance().closeConnection();</span>
         }
-<span class="fc" id="L63">        return obj;</span>
+<span class="fc" id="L82">        return obj;</span>
 
     }
 
+    /**
+     * Busca o código máximo (ID) dos clientes no banco de dados.
+     *
+     * @return O código máximo encontrado.
+     */
     public static int buscaCodigo() {
-<span class="nc" id="L68">        Connection conn = DBConnection.getInstance().getConnection();</span>
-<span class="nc" id="L69">        PreparedStatement ps = null;</span>
-<span class="nc" id="L70">        ResultSet resultSet = null;</span>
-<span class="nc" id="L71">        int id = 0;</span>
+<span class="nc" id="L92">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="nc" id="L93">        PreparedStatement ps = null;</span>
+<span class="nc" id="L94">        ResultSet resultSet = null;</span>
+<span class="nc" id="L95">        int id = 0;</span>
         try {
-<span class="nc" id="L73">            String sql = &quot;select max(id) from clientes&quot;;</span>
-<span class="nc" id="L74">            ps = conn.prepareStatement(sql);</span>
-<span class="nc" id="L75">            resultSet = ps.executeQuery();</span>
-<span class="nc" id="L76">            resultSet.next();</span>
-<span class="nc" id="L77">            id = resultSet.getInt(1);</span>
+<span class="nc" id="L97">            String sql = &quot;select max(id) from clientes&quot;;</span>
+<span class="nc" id="L98">            ps = conn.prepareStatement(sql);</span>
+<span class="nc" id="L99">            resultSet = ps.executeQuery();</span>
+<span class="nc" id="L100">            resultSet.next();</span>
+<span class="nc" id="L101">            id = resultSet.getInt(1);</span>
 
-<span class="nc" id="L79">        } catch (SQLException e) {</span>
-<span class="nc" id="L80">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L81">            e.printStackTrace();</span>
+<span class="nc" id="L103">        } catch (SQLException e) {</span>
+<span class="nc" id="L104">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L105">            e.printStackTrace();</span>
         } finally {
-<span class="nc" id="L83">            DBConnection.getInstance().closeConnection();</span>
+<span class="nc" id="L107">            DBConnection.getInstance().closeConnection();</span>
         }
-<span class="nc" id="L85">        return id;</span>
+<span class="nc" id="L109">        return id;</span>
     }
 
-// método para deletar cliente
+    // método para deletar cliente
     public boolean deleteCliente(int id) {
-<span class="nc" id="L90">        String sql = &quot;DELETE FROM clientes WHERE id = ?&quot;;</span>
-<span class="nc" id="L91">        boolean deleted = false;</span>
+<span class="nc" id="L114">        String sql = &quot;DELETE FROM clientes WHERE id = ?&quot;;</span>
+<span class="nc" id="L115">        boolean deleted = false;</span>
 
-<span class="nc" id="L93">        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {</span>
+<span class="nc" id="L117">        try (Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="nc" id="L118">                PreparedStatement pstm = conn.prepareStatement(sql)) {</span>
 
-<span class="nc" id="L95">            pstm.setInt(1, id);</span>
+<span class="nc" id="L120">            pstm.setInt(1, id);</span>
 
-<span class="nc" id="L97">            int rowsAffected = pstm.executeUpdate();</span>
+<span class="nc" id="L122">            int rowsAffected = pstm.executeUpdate();</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (rowsAffected &gt; 0) {</span>
-<span class="nc" id="L100">                System.out.println(&quot;Cliente deletado com sucesso!&quot;);</span>
-<span class="nc" id="L101">                deleted = true;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (rowsAffected &gt; 0) {</span>
+<span class="nc" id="L125">                System.out.println(&quot;Cliente deletado com sucesso!&quot;);</span>
+<span class="nc" id="L126">                deleted = true;</span>
             } else {
-<span class="nc" id="L103">                System.out.println(&quot;Cliente com ID &quot; + id + &quot; não encontrado.&quot;);</span>
+<span class="nc" id="L128">                System.out.println(&quot;Cliente com ID &quot; + id + &quot; não encontrado.&quot;);</span>
             }
-<span class="nc" id="L105">        } catch (SQLException e) {</span>
-<span class="nc" id="L106">            e.printStackTrace();</span>
+<span class="nc" id="L130">        } catch (SQLException e) {</span>
+<span class="nc" id="L131">            e.printStackTrace();</span>
         } finally {
-<span class="nc" id="L108">            DBConnection.getInstance().closeConnection();</span>
+<span class="nc" id="L133">            DBConnection.getInstance().closeConnection();</span>
         }
 
-<span class="nc" id="L111">        return deleted;</span>
+<span class="nc" id="L136">        return deleted;</span>
     }
 
     // método para atualizar cliente
     public boolean atualizarCliente(Cliente cliente) {
-<span class="nc" id="L116">        String sql = &quot;UPDATE clientes SET &quot;;</span>
-<span class="nc" id="L117">        Connection conn = null;</span>
-<span class="nc" id="L118">        PreparedStatement ps = null;</span>
+<span class="nc" id="L141">        String sql = &quot;UPDATE clientes SET &quot;;</span>
+<span class="nc" id="L142">        Connection conn = null;</span>
+<span class="nc" id="L143">        PreparedStatement ps = null;</span>
 
         try {
-<span class="nc" id="L121">            conn = DBConnection.getInstance().getConnection();</span>
-<span class="nc" id="L122">            int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados</span>
-<span class="nc" id="L123">            HashMap&lt;String, String&gt; fieldsToUpdate = new HashMap&lt;&gt;(); // Armazena os campos a serem atualizados</span>
+<span class="nc" id="L146">            conn = DBConnection.getInstance().getConnection();</span>
+<span class="nc" id="L147">            int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados</span>
+<span class="nc" id="L148">            HashMap&lt;String, String&gt; fieldsToUpdate = new HashMap&lt;&gt;(); // Armazena os campos a serem atualizados</span>
 
-            // Adicione todos os campos que deseja permitir a atualização
-<span class="nc bnc" id="L126" title="All 2 branches missed.">            if (cliente.getNome() != null) {</span>
-<span class="nc" id="L127">                fieldsToUpdate.put(&quot;nome&quot;, cliente.getNome());</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (cliente.getNome() != null) {</span>
+<span class="nc" id="L151">                fieldsToUpdate.put(&quot;nome&quot;, cliente.getNome());</span>
             }
-<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (cliente.getCpf() != null) {</span>
-<span class="nc" id="L130">                fieldsToUpdate.put(&quot;cpf&quot;, cliente.getCpf());</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            if (cliente.getCpf() != null) {</span>
+<span class="nc" id="L154">                fieldsToUpdate.put(&quot;cpf&quot;, cliente.getCpf());</span>
             }
-<span class="nc bnc" id="L132" title="All 2 branches missed.">            if (cliente.getEndereco() != null) {</span>
-<span class="nc" id="L133">                fieldsToUpdate.put(&quot;endereco&quot;, cliente.getEndereco());</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if (cliente.getEndereco() != null) {</span>
+<span class="nc" id="L157">                fieldsToUpdate.put(&quot;endereco&quot;, cliente.getEndereco());</span>
             }
-<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (cliente.getEmail() != null) {</span>
-<span class="nc" id="L136">                fieldsToUpdate.put(&quot;email&quot;, cliente.getEmail());</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            if (cliente.getEmail() != null) {</span>
+<span class="nc" id="L160">                fieldsToUpdate.put(&quot;email&quot;, cliente.getEmail());</span>
             }
-<span class="nc bnc" id="L138" title="All 2 branches missed.">            if (cliente.getSenha() != null) {</span>
-<span class="nc" id="L139">                fieldsToUpdate.put(&quot;senha&quot;, cliente.getSenha());</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (cliente.getSenha() != null) {</span>
+<span class="nc" id="L163">                fieldsToUpdate.put(&quot;senha&quot;, cliente.getSenha());</span>
             }
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                if (numberOfFields &gt; 0) {</span>
-<span class="nc" id="L144">                    sql += &quot;,&quot;;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">                if (numberOfFields &gt; 0) {</span>
+<span class="nc" id="L168">                    sql += &quot;,&quot;;</span>
                 }
-<span class="nc" id="L146">                sql += entry.getKey() + &quot; = ?&quot;;</span>
-<span class="nc" id="L147">                numberOfFields++;</span>
-<span class="nc" id="L148">            }</span>
+<span class="nc" id="L170">                sql += entry.getKey() + &quot; = ?&quot;;</span>
+<span class="nc" id="L171">                numberOfFields++;</span>
+<span class="nc" id="L172">            }</span>
 
-<span class="nc" id="L150">            sql += &quot; WHERE id = ?&quot;; // Adicione a cláusula WHERE</span>
+<span class="nc" id="L174">            sql += &quot; WHERE id = ?&quot;;</span>
 
-<span class="nc" id="L152">            ps = conn.prepareStatement(sql);</span>
+<span class="nc" id="L176">            ps = conn.prepareStatement(sql);</span>
 
-<span class="nc" id="L154">            int parameterIndex = 1; // Índice para os parâmetros na declaração SQL</span>
+<span class="nc" id="L178">            int parameterIndex = 1; // Índice para os parâmetros na declaração SQL</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
-<span class="nc" id="L157">                ps.setString(parameterIndex, entry.getValue());</span>
-<span class="nc" id="L158">                parameterIndex++;</span>
-<span class="nc" id="L159">            }</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
+<span class="nc" id="L181">                ps.setString(parameterIndex, entry.getValue());</span>
+<span class="nc" id="L182">                parameterIndex++;</span>
+<span class="nc" id="L183">            }</span>
 
-            // Adicione o ID do cliente
-<span class="nc" id="L162">            ps.setInt(parameterIndex, cliente.getId());</span>
+            // Adicionar o ID do cliente
+<span class="nc" id="L186">            ps.setInt(parameterIndex, cliente.getId());</span>
 
-<span class="nc" id="L164">            int rowsAffected = ps.executeUpdate();</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">            return rowsAffected &gt; 0;</span>
-<span class="nc" id="L166">        } catch (SQLException e) {</span>
-<span class="nc" id="L167">            System.err.println(&quot;Ocorreu um erro ao atualizar o cliente:&quot;);</span>
-<span class="nc" id="L168">            System.err.println(&quot;Mensagem de erro: &quot; + e.getMessage());</span>
-<span class="nc" id="L169">            e.printStackTrace(); // Isso imprime o rastreamento do erro no console</span>
-<span class="nc" id="L170">            return false;</span>
+<span class="nc" id="L188">            int rowsAffected = ps.executeUpdate();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            return rowsAffected &gt; 0;</span>
+<span class="nc" id="L190">        } catch (SQLException e) {</span>
+<span class="nc" id="L191">            System.err.println(&quot;Ocorreu um erro ao atualizar o cliente:&quot;);</span>
+<span class="nc" id="L192">            System.err.println(&quot;Mensagem de erro: &quot; + e.getMessage());</span>
+<span class="nc" id="L193">            e.printStackTrace(); // Imprime o rastreamento do erro no console</span>
+<span class="nc" id="L194">            return false;</span>
         } finally {
-<span class="nc" id="L172">            DBConnection.getInstance().closeConnection();</span>
+<span class="nc" id="L196">            DBConnection.getInstance().closeConnection();</span>
         }
     }
 

@@ -10,9 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 import model.Vendedor;
 
+/**
+ * Classe responsável por interagir com o banco de dados para operações
+ * relacionadas a vendedores.
+ * Esta classe é utilizada pelas classes VendedorController e AppController.
+ * 
+ * @author Sâmeck
+ */
+
 public class VendedorDAO {
 
-    //método para criar um vendedor
+    /**
+     * Método para criar um novo vendedor no banco de dados.
+     *
+     * @param v Vendedor a ser salvo.
+     */
     public static void saveVendedor(Vendedor v) {
         Connection conn = DBConnection.getInstance().getConnection();
         try {
@@ -36,7 +48,11 @@ public class VendedorDAO {
 
     }
 
-    //método para listar os vendedores
+    /**
+     * Método para listar todos os vendedores do banco de dados.
+     *
+     * @return Lista de vendedores.
+     */
     public static List<Vendedor> getVendedores() {
 
         Connection conn = DBConnection.getInstance().getConnection();
@@ -62,6 +78,11 @@ public class VendedorDAO {
 
     }
 
+    /**
+     * Método que busca o ID dos vendedores no banco de dados.
+     *
+     * @return ID.
+     */
     public static int buscaCodigo() {
         Connection conn = DBConnection.getInstance().getConnection();
         int id = 0;
@@ -81,12 +102,18 @@ public class VendedorDAO {
         return id;
     }
 
-    // método para deletar vendedor
+    /**
+     * Método para deletar um vendedor do banco de dados com base no ID.
+     *
+     * @param id ID do vendedor a ser deletado.
+     * @return True se o vendedor foi deletado com sucesso, false caso contrário.
+     */
     public boolean deleteVendedor(int id) {
         String sql = "DELETE FROM vendedores WHERE id = ?";
         boolean deleted = false;
 
-        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getInstance().getConnection();
+                PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setInt(1, id);
 
@@ -107,7 +134,12 @@ public class VendedorDAO {
         return deleted;
     }
 
-    // método para atualizar vendedor
+    /**
+     * Método para atualizar as informações de um vendedor no banco de dados.
+     *
+     * @param vendedor Vendedor com as informações atualizadas.
+     * @return True se o vendedor foi atualizado com sucesso, false caso contrário.
+     */
     public boolean atualizarVendedor(Vendedor vendedor) {
         String sql = "UPDATE vendedores SET ";
         Connection conn = null;
@@ -118,7 +150,6 @@ public class VendedorDAO {
             int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados
             HashMap<String, String> fieldsToUpdate = new HashMap<>(); // Armazena os campos a serem atualizados
 
-            // Adicione todos os campos que deseja permitir a atualização
             if (vendedor.getNome() != null) {
                 fieldsToUpdate.put("nome", vendedor.getNome());
             }
@@ -143,7 +174,7 @@ public class VendedorDAO {
                 numberOfFields++;
             }
 
-            sql += " WHERE id = ?"; // Adicione a cláusula WHERE
+            sql += " WHERE id = ?";
 
             ps = conn.prepareStatement(sql);
 
@@ -154,7 +185,7 @@ public class VendedorDAO {
                 parameterIndex++;
             }
 
-            // Adicione o ID do cliente
+            // Adiciona o ID do cliente
             ps.setInt(parameterIndex, vendedor.getId());
 
             int rowsAffected = ps.executeUpdate();
@@ -162,7 +193,7 @@ public class VendedorDAO {
         } catch (SQLException e) {
             System.err.println("Ocorreu um erro ao atualizar o cliente:");
             System.err.println("Mensagem de erro: " + e.getMessage());
-            e.printStackTrace(); // Isso imprime o rastreamento do erro no console
+            e.printStackTrace(); // Imprime o rastreamento do erro no console
             return false;
         } finally {
             DBConnection.getInstance().closeConnection();

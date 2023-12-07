@@ -10,6 +10,7 @@ public class Produto {
     public Produto() {
     }
 
+    // Construtor que inicializa todos os campos
     public Produto(int id, String nome, double preco, int qtd) {
         this.id = id;
         this.nome = nome;
@@ -17,21 +18,23 @@ public class Produto {
         this.qtd = qtd;
     }
 
+    // Construtor que não inclui id
     public Produto(String nome, double preco, int qtd) {
         this.nome = nome;
         this.preco = preco;
         this.qtd = qtd;
     }
-    
+
     @Override
     public String toString() {
-        return "Produto{" +                 
-                "nome='" + nome + '\'' +
-                ", preco='" + preco + '\'' +
-                ", quantidade='" + qtd + '\'' +                
-                '}';
+        return "Cliente{"
+                + "nome='" + nome + '\''
+                + ", preco='" + preco + '\''
+                + ", quantidade='" + qtd + '\''
+                + '}';
     }
 
+    // Getters e Setters...
     public int getId() {
         return id;
     }

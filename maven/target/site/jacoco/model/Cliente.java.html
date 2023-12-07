@@ -9,7 +9,7 @@ public class Cliente {
     private String email;
     private String senha;
 
-
+    // Construtor que inicializa todos os campos
 <span class="fc" id="L13">    public Cliente(int id, String nome, String cpf, String endereco, String email, String senha) {</span>
 <span class="fc" id="L14">        this.nome = nome;</span>
 <span class="fc" id="L15">        this.cpf = cpf;</span>
@@ -17,20 +17,22 @@ public class Cliente {
 <span class="fc" id="L17">        this.email = email;</span>
 <span class="fc" id="L18">        this.senha = senha;</span>
 <span class="fc" id="L19">    }</span>
-<span class="nc" id="L20">    public Cliente(){}</span>
 
-<span class="fc" id="L22">    public Cliente(String nome, String cpf, String endereco, String email, String senha) {</span>
-<span class="fc" id="L23">        this.nome = nome;</span>
-<span class="fc" id="L24">        this.cpf = cpf;</span>
-<span class="fc" id="L25">        this.endereco = endereco;</span>
-<span class="fc" id="L26">        this.email = email;</span>
-<span class="fc" id="L27">        this.senha = senha;</span>
-<span class="fc" id="L28">    }</span>
-    
-    
+<span class="fc" id="L21">    public Cliente() {</span>
+<span class="fc" id="L22">    }</span>
+
+    // Construtor que não inclui id
+<span class="fc" id="L25">    public Cliente(String nome, String cpf, String endereco, String email, String senha) {</span>
+<span class="fc" id="L26">        this.nome = nome;</span>
+<span class="fc" id="L27">        this.cpf = cpf;</span>
+<span class="fc" id="L28">        this.endereco = endereco;</span>
+<span class="fc" id="L29">        this.email = email;</span>
+<span class="fc" id="L30">        this.senha = senha;</span>
+<span class="fc" id="L31">    }</span>
+
     @Override
     public String toString() {
-<span class="nc" id="L33">        return &quot;Cliente{&quot; +                 </span>
+<span class="nc" id="L35">        return &quot;Cliente{&quot; +                 </span>
                 &quot;nome='&quot; + nome + '\'' +
                 &quot;, cpf='&quot; + cpf + '\'' +
                 &quot;, endereco='&quot; + endereco + '\'' +
@@ -39,52 +41,53 @@ public class Cliente {
                 '}';
     }
 
+    // Getters e Setters
     public int getId() {
-<span class="nc" id="L43">        return id;</span>
+<span class="fc" id="L46">        return id;</span>
     }
 
     public void setId(int id) {
-<span class="nc" id="L47">        this.id = id;</span>
-<span class="nc" id="L48">    }</span>
+<span class="nc" id="L50">        this.id = id;</span>
+<span class="nc" id="L51">    }</span>
 
     public String getNome() {
-<span class="fc" id="L51">        return nome;</span>
+<span class="fc" id="L54">        return nome;</span>
     }
 
     public void setNome(String nome) {
-<span class="nc" id="L55">        this.nome = nome;</span>
-<span class="nc" id="L56">    }</span>
+<span class="fc" id="L58">        this.nome = nome;</span>
+<span class="fc" id="L59">    }</span>
 
     public String getCpf() {
-<span class="fc" id="L59">        return cpf;</span>
+<span class="fc" id="L62">        return cpf;</span>
     }
 
     public void setCpf(String cpf) {
-<span class="nc" id="L63">        this.cpf = cpf;</span>
-<span class="nc" id="L64">    }</span>
+<span class="fc" id="L66">        this.cpf = cpf;</span>
+<span class="fc" id="L67">    }</span>
 
     public String getEndereco() {
-<span class="fc" id="L67">        return endereco;</span>
+<span class="fc" id="L70">        return endereco;</span>
     }
 
     public void setEndereco(String endereco) {
-<span class="nc" id="L71">        this.endereco = endereco;</span>
-<span class="nc" id="L72">    }</span>
+<span class="fc" id="L74">        this.endereco = endereco;</span>
+<span class="fc" id="L75">    }</span>
 
     public String getEmail() {
-<span class="fc" id="L75">        return email;</span>
+<span class="fc" id="L78">        return email;</span>
     }
 
     public void setEmail(String email) {
-<span class="nc" id="L79">        this.email = email;</span>
-<span class="nc" id="L80">    }</span>
+<span class="fc" id="L82">        this.email = email;</span>
+<span class="fc" id="L83">    }</span>
 
     public String getSenha() {
-<span class="fc" id="L83">        return senha;</span>
+<span class="fc" id="L86">        return senha;</span>
     }
 
     public void setSenha(String senha) {
-<span class="nc" id="L87">        this.senha = senha;</span>
-<span class="nc" id="L88">    }</span>
+<span class="fc" id="L90">        this.senha = senha;</span>
+<span class="fc" id="L91">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

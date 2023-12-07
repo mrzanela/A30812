@@ -6,7 +6,10 @@ import model.Vendedor;
 import view.VendedorView;
 
 /**
- *
+ * Controlador responsável por gerenciar operações relacionadas aos vendedores.
+ * Interage com VendedorView e VendedorDAO
+ * Utilizado pela classe AppController.
+ * 
  * @author Sâmeck
  */
 public class VendedorController {
@@ -15,54 +18,77 @@ public class VendedorController {
     private VendedorView vv;
     private List&lt;Vendedor&gt; vendedores;
 
-<span class="nc" id="L18">    public VendedorController(VendedorView vv, List&lt;Vendedor&gt; vendedores) {</span>
-<span class="nc" id="L19">        this.vv = vv;</span>
-<span class="nc" id="L20">        this.vendedores = vendedores;</span>
-<span class="nc" id="L21">    }</span>
+    /**
+     * Construtor do VendedorController.
+     *
+     * @param vv         Instância da classe VendedorView.
+     * @param vendedores Lista de vendedores.
+     */
 
+<span class="nc" id="L28">    public VendedorController(VendedorView vv, List&lt;Vendedor&gt; vendedores) {</span>
+<span class="nc" id="L29">        this.vv = vv;</span>
+<span class="nc" id="L30">        this.vendedores = vendedores;</span>
+<span class="nc" id="L31">    }</span>
+
+    /**
+     * Cria um novo vendedor com base nos dados inseridos pelo usuário.
+     *
+     * @return true se o vendedor foi criado com sucesso, false caso contrário.
+     */
     public boolean criaVendedor() {
-<span class="nc" id="L24">        boolean status = false;</span>
-<span class="nc" id="L25">        int id = VendedorDAO.buscaCodigo() + 1;</span>
-<span class="nc" id="L26">        this.v = vv.inputData(id);</span>
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (this.v != null) {</span>
-<span class="nc" id="L28">            vendedores.add(v);</span>
-<span class="nc" id="L29">            VendedorDAO.saveVendedor(v);</span>
-<span class="nc" id="L30">            status = true;</span>
+<span class="nc" id="L39">        boolean status = false;</span>
+<span class="nc" id="L40">        int id = VendedorDAO.buscaCodigo() + 1;</span>
+<span class="nc" id="L41">        this.v = vv.inputData(id);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (this.v != null) {</span>
+<span class="nc" id="L43">            vendedores.add(v);</span>
+<span class="nc" id="L44">            VendedorDAO.saveVendedor(v);</span>
+<span class="nc" id="L45">            status = true;</span>
         }
-<span class="nc" id="L32">        return status;</span>
+<span class="nc" id="L47">        return status;</span>
     }
 
+    /**
+     * Deleta um vendedor com base no ID fornecido pelo usuário.
+     *
+     * @return true se o vendedor foi deletado com sucesso, false caso contrário.
+     */
     public boolean deletaVendedor() {
-<span class="nc" id="L36">        int id = vv.defineVendedor();</span>
-<span class="nc" id="L37">        boolean deleted = false;</span>
+<span class="nc" id="L56">        int id = vv.defineVendedor();</span>
+<span class="nc" id="L57">        boolean deleted = false;</span>
 
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (id &gt; 0) {</span>
-<span class="nc" id="L40">            VendedorDAO dao = new VendedorDAO(); // Criar uma instância de VendedorDAO</span>
-<span class="nc" id="L41">            deleted = dao.deleteVendedor(id); // Chamar o método de instância deleteVendedor</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (deleted) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (id &gt; 0) {</span>
+<span class="nc" id="L60">            VendedorDAO dao = new VendedorDAO(); // Criar uma instância de VendedorDAO</span>
+<span class="nc" id="L61">            deleted = dao.deleteVendedor(id); // Chamar o método de instância deleteVendedor</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (deleted) {</span>
+                // Tratamento após a exclusão
             }
-<span class="nc" id="L44">        } else {</span>
-<span class="nc" id="L45">            System.out.println(&quot;ID inválido.&quot;);</span>
+<span class="nc" id="L65">        } else {</span>
+<span class="nc" id="L66">            System.out.println(&quot;ID inválido.&quot;);</span>
         }
 
-<span class="nc" id="L48">        return deleted;</span>
+<span class="nc" id="L69">        return deleted;</span>
     }
 
+    /**
+     * Atualiza um vendedor com base nos dados inseridos pelo usuário.
+     *
+     * @return true se o vendedor foi atualizado com sucesso, false caso contrário.
+     */
     public boolean atualizarVendedor() {
-<span class="nc" id="L52">        Vendedor vendedorParaAtualizar = vv.inputDataForUpdate();</span>
-<span class="nc" id="L53">        boolean atualizado = atualizarVendedorNoBanco(vendedorParaAtualizar);</span>
+<span class="nc" id="L78">        Vendedor vendedorParaAtualizar = vv.inputDataForUpdate();</span>
+<span class="nc" id="L79">        boolean atualizado = atualizarVendedorNoBanco(vendedorParaAtualizar);</span>
 
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (atualizado) {</span>
-<span class="nc" id="L56">            System.out.println(&quot;Vendedor atualizado com sucesso!&quot;);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (atualizado) {</span>
+<span class="nc" id="L82">            System.out.println(&quot;Vendedor atualizado com sucesso!&quot;);</span>
         } else {
-<span class="nc" id="L58">            System.out.println(&quot;Falha ao atualizar o vendedor.&quot;);</span>
+<span class="nc" id="L84">            System.out.println(&quot;Falha ao atualizar o vendedor.&quot;);</span>
         }
-<span class="nc" id="L60">        return atualizado;</span>
+<span class="nc" id="L86">        return atualizado;</span>
     }
 
     private boolean atualizarVendedorNoBanco(Vendedor vendedor) {
-<span class="nc" id="L64">        VendedorDAO vendedorDAO = new VendedorDAO();</span>
-<span class="nc" id="L65">        return vendedorDAO.atualizarVendedor(vendedor);</span>
+<span class="nc" id="L90">        VendedorDAO vendedorDAO = new VendedorDAO();</span>
+<span class="nc" id="L91">        return vendedorDAO.atualizarVendedor(vendedor);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

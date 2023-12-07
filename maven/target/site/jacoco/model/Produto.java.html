@@ -10,58 +10,61 @@ public class Produto {
 <span class="fc" id="L10">    public Produto() {</span>
 <span class="fc" id="L11">    }</span>
 
-<span class="fc" id="L13">    public Produto(int id, String nome, double preco, int qtd) {</span>
-<span class="fc" id="L14">        this.id = id;</span>
-<span class="fc" id="L15">        this.nome = nome;</span>
-<span class="fc" id="L16">        this.preco = preco;</span>
-<span class="fc" id="L17">        this.qtd = qtd;</span>
-<span class="fc" id="L18">    }</span>
+    // Construtor que inicializa todos os campos
+<span class="fc" id="L14">    public Produto(int id, String nome, double preco, int qtd) {</span>
+<span class="fc" id="L15">        this.id = id;</span>
+<span class="fc" id="L16">        this.nome = nome;</span>
+<span class="fc" id="L17">        this.preco = preco;</span>
+<span class="fc" id="L18">        this.qtd = qtd;</span>
+<span class="fc" id="L19">    }</span>
 
-<span class="nc" id="L20">    public Produto(String nome, double preco, int qtd) {</span>
-<span class="nc" id="L21">        this.nome = nome;</span>
-<span class="nc" id="L22">        this.preco = preco;</span>
-<span class="nc" id="L23">        this.qtd = qtd;</span>
-<span class="nc" id="L24">    }</span>
-    
+    // Construtor que não inclui id
+<span class="nc" id="L22">    public Produto(String nome, double preco, int qtd) {</span>
+<span class="nc" id="L23">        this.nome = nome;</span>
+<span class="nc" id="L24">        this.preco = preco;</span>
+<span class="nc" id="L25">        this.qtd = qtd;</span>
+<span class="nc" id="L26">    }</span>
+
     @Override
     public String toString() {
-<span class="fc" id="L28">        return &quot;Produto{&quot; +                 </span>
-                &quot;nome='&quot; + nome + '\'' +
-                &quot;, preco='&quot; + preco + '\'' +
-                &quot;, quantidade='&quot; + qtd + '\'' +                
-                '}';
+<span class="fc" id="L30">        return &quot;Cliente{&quot;</span>
+                + &quot;nome='&quot; + nome + '\''
+                + &quot;, preco='&quot; + preco + '\''
+                + &quot;, quantidade='&quot; + qtd + '\''
+                + '}';
     }
 
+    // Getters e Setters...
     public int getId() {
-<span class="fc" id="L36">        return id;</span>
+<span class="fc" id="L39">        return id;</span>
     }
 
     public void setId(int id) {
-<span class="nc" id="L40">        this.id = id;</span>
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L43">        this.id = id;</span>
+<span class="nc" id="L44">    }</span>
 
     public String getNome() {
-<span class="fc" id="L44">        return nome;</span>
+<span class="fc" id="L47">        return nome;</span>
     }
 
     public void setNome(String nome) {
-<span class="fc" id="L48">        this.nome = nome;</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L51">        this.nome = nome;</span>
+<span class="fc" id="L52">    }</span>
 
     public double getPreco() {
-<span class="fc" id="L52">        return preco;</span>
+<span class="fc" id="L55">        return preco;</span>
     }
 
     public void setPreco(double preco) {
-<span class="fc" id="L56">        this.preco = preco;</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L59">        this.preco = preco;</span>
+<span class="fc" id="L60">    }</span>
 
     public int getQtd() {
-<span class="fc" id="L60">        return qtd;</span>
+<span class="fc" id="L63">        return qtd;</span>
     }
 
     public void setQtd(int qtd) {
-<span class="fc" id="L64">        this.qtd = qtd;</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L67">        this.qtd = qtd;</span>
+<span class="fc" id="L68">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -6,7 +6,10 @@ import model.Produto;
 import view.ProdutoView;
 
 /**
- *
+ * Controlador responsável por gerenciar operações relacionadas aos produtos.
+ * Interage com ProdutoView e ProdutoDAO
+ * É utilizado pela classe AppController.
+ * 
  * @author Sâmeck
  */
 public class ProdutoController {
@@ -14,54 +17,76 @@ public class ProdutoController {
     private ProdutoView pv;
     private List&lt;Produto&gt; produtos;
 
-<span class="nc" id="L17">    public ProdutoController(ProdutoView pv, List&lt;Produto&gt; produtos) {</span>
-<span class="nc" id="L18">        this.pv = pv;</span>
-<span class="nc" id="L19">        this.produtos = produtos;</span>
-<span class="nc" id="L20">    }</span>
+    /**
+     * Construtor do ProdutoController.
+     *
+     * @param pv       Instância da classe ProdutoView.
+     * @param produtos Lista de produtos.
+     */
+<span class="nc" id="L26">    public ProdutoController(ProdutoView pv, List&lt;Produto&gt; produtos) {</span>
+<span class="nc" id="L27">        this.pv = pv;</span>
+<span class="nc" id="L28">        this.produtos = produtos;</span>
+<span class="nc" id="L29">    }</span>
 
+    /**
+     * Cria um novo produto com base nos dados inseridos pelo usuário.
+     *
+     * @return true se o produto foi criado com sucesso, false caso contrário.
+     */
     public boolean criaProduto() {
-<span class="nc" id="L23">        boolean status = false;</span>
-<span class="nc" id="L24">        int id = ProdutoDAO.buscaCodigo() + 1;</span>
-<span class="nc" id="L25">        this.p = pv.inputData(id);</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (this.p != null) {</span>
-<span class="nc" id="L27">            produtos.add(p);</span>
-<span class="nc" id="L28">            ProdutoDAO.saveProduto(p);</span>
-<span class="nc" id="L29">            status = true;</span>
+<span class="nc" id="L37">        boolean status = false;</span>
+<span class="nc" id="L38">        int id = ProdutoDAO.buscaCodigo() + 1;</span>
+<span class="nc" id="L39">        this.p = pv.inputData(id);</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (this.p != null) {</span>
+<span class="nc" id="L41">            produtos.add(p);</span>
+<span class="nc" id="L42">            ProdutoDAO.saveProduto(p);</span>
+<span class="nc" id="L43">            status = true;</span>
         }
-<span class="nc" id="L31">        return status;</span>
+<span class="nc" id="L45">        return status;</span>
     }
 
+    /**
+     * Deleta um produto com base no ID fornecido pelo usuário.
+     *
+     * @return true se o produto foi deletado com sucesso, false caso contrário.
+     */
     public boolean deletaProduto() {
-<span class="nc" id="L35">        int id = pv.defineProduto();</span>
-<span class="nc" id="L36">        boolean deleted = false;</span>
+<span class="nc" id="L54">        int id = pv.defineProduto();</span>
+<span class="nc" id="L55">        boolean deleted = false;</span>
 
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (id &gt; 0) {</span>
-<span class="nc" id="L39">            ProdutoDAO dao = new ProdutoDAO(); // Criar uma instância de ProdutoDAO</span>
-<span class="nc" id="L40">            deleted = dao.deleteProduto(id); // Chamar o método de instância deleteVendedor</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (deleted) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (id &gt; 0) {</span>
+<span class="nc" id="L58">            ProdutoDAO dao = new ProdutoDAO(); // Criar uma instância de ProdutoDAO</span>
+<span class="nc" id="L59">            deleted = dao.deleteProduto(id); // Chamar o método de instância deleteVendedor</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (deleted) {</span>
+                // Lógica para tratamento após a exclusão, se necessário
             }
-<span class="nc" id="L43">        } else {</span>
-<span class="nc" id="L44">            System.out.println(&quot;ID inválido.&quot;);</span>
+<span class="nc" id="L63">        } else {</span>
+<span class="nc" id="L64">            System.out.println(&quot;ID inválido.&quot;);</span>
         }
 
-<span class="nc" id="L47">        return deleted;</span>
+<span class="nc" id="L67">        return deleted;</span>
     }
 
+    /**
+     * Atualiza um produto com base nos dados inseridos pelo usuário.
+     *
+     * @return true se o produto foi atualizado com sucesso, false caso contrário.
+     */
     public boolean atualizarProduto() {
-<span class="nc" id="L51">        Produto produtoParaAtualizar = pv.inputDataForUpdate();</span>
-<span class="nc" id="L52">        boolean atualizado = atualizarProdutoNoBanco(produtoParaAtualizar);</span>
+<span class="nc" id="L76">        Produto produtoParaAtualizar = pv.inputDataForUpdate();</span>
+<span class="nc" id="L77">        boolean atualizado = atualizarProdutoNoBanco(produtoParaAtualizar);</span>
 
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (atualizado) {</span>
-<span class="nc" id="L55">            System.out.println(&quot;Produto atualizado com sucesso!&quot;);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (atualizado) {</span>
+<span class="nc" id="L80">            System.out.println(&quot;Produto atualizado com sucesso!&quot;);</span>
         } else {
-<span class="nc" id="L57">            System.out.println(&quot;Falha ao atualizar o Produto.&quot;);</span>
+<span class="nc" id="L82">            System.out.println(&quot;Falha ao atualizar o Produto.&quot;);</span>
         }
-<span class="nc" id="L59">        return atualizado;</span>
+<span class="nc" id="L84">        return atualizado;</span>
     }
 
     private boolean atualizarProdutoNoBanco(Produto produto) {
-<span class="nc" id="L63">       ProdutoDAO produtoDAO = new ProdutoDAO();</span>
-<span class="nc" id="L64">        return produtoDAO.atualizarProduto(produto);</span>
+<span class="nc" id="L88">        ProdutoDAO produtoDAO = new ProdutoDAO();</span>
+<span class="nc" id="L89">        return produtoDAO.atualizarProduto(produto);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

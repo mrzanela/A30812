@@ -10,162 +10,193 @@ import java.util.HashMap;
 import java.util.Map;
 import model.Vendedor;
 
-<span class="fc" id="L13">public class VendedorDAO {</span>
+/**
+ * Classe responsável por interagir com o banco de dados para operações
+ * relacionadas a vendedores.
+ * Esta classe é utilizada pelas classes VendedorController e AppController.
+ * 
+ * @author Sâmeck
+ */
 
-    //método para criar um vendedor
+<span class="fc" id="L21">public class VendedorDAO {</span>
+
+    /**
+     * Método para criar um novo vendedor no banco de dados.
+     *
+     * @param v Vendedor a ser salvo.
+     */
     public static void saveVendedor(Vendedor v) {
-<span class="fc" id="L17">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L29">        Connection conn = DBConnection.getInstance().getConnection();</span>
         try {
-<span class="fc" id="L19">            String sql = &quot;insert into vendedores (id, nome, cnpj, endereco, email, senha) values (?, ?, ?,?,?, ?)&quot;;</span>
-<span class="fc" id="L20">            PreparedStatement ps = conn.prepareStatement(sql);</span>
-<span class="fc" id="L21">            ps.setInt(1, v.getId());</span>
-<span class="fc" id="L22">            ps.setString(2, v.getNome());</span>
-<span class="fc" id="L23">            ps.setString(3, v.getCnpj());</span>
-<span class="fc" id="L24">            ps.setString(4, v.getEndereco());</span>
-<span class="fc" id="L25">            ps.setString(5, v.getEmail());</span>
-<span class="fc" id="L26">            ps.setString(6, v.getSenha());</span>
+<span class="fc" id="L31">            String sql = &quot;insert into vendedores (id, nome, cnpj, endereco, email, senha) values (?, ?, ?,?,?, ?)&quot;;</span>
+<span class="fc" id="L32">            PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L33">            ps.setInt(1, v.getId());</span>
+<span class="fc" id="L34">            ps.setString(2, v.getNome());</span>
+<span class="fc" id="L35">            ps.setString(3, v.getCnpj());</span>
+<span class="fc" id="L36">            ps.setString(4, v.getEndereco());</span>
+<span class="fc" id="L37">            ps.setString(5, v.getEmail());</span>
+<span class="fc" id="L38">            ps.setString(6, v.getSenha());</span>
 
-<span class="fc" id="L28">            ps.executeUpdate();</span>
+<span class="fc" id="L40">            ps.executeUpdate();</span>
 
-<span class="nc" id="L30">        } catch (SQLException e) {</span>
-<span class="nc" id="L31">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L32">            e.printStackTrace();</span>
+<span class="nc" id="L42">        } catch (SQLException e) {</span>
+<span class="nc" id="L43">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L44">            e.printStackTrace();</span>
         } finally {
-<span class="fc" id="L34">            DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L46">            DBConnection.getInstance().closeConnection();</span>
         }
 
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L49">    }</span>
 
-    //método para listar os vendedores
+    /**
+     * Método para listar todos os vendedores do banco de dados.
+     *
+     * @return Lista de vendedores.
+     */
     public static List&lt;Vendedor&gt; getVendedores() {
 
-<span class="fc" id="L42">        Connection conn = DBConnection.getInstance().getConnection();</span>
-<span class="fc" id="L43">        List&lt;Vendedor&gt; obj = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L59">        List&lt;Vendedor&gt; obj = new ArrayList&lt;&gt;();</span>
         try {
-<span class="fc" id="L45">            String sql = &quot;select * from vendedores&quot;;</span>
-<span class="fc" id="L46">            PreparedStatement ps = conn.prepareStatement(sql);</span>
-<span class="fc" id="L47">            ResultSet resultSet = ps.executeQuery();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">            while (resultSet.next()) {</span>
-<span class="fc" id="L49">                Vendedor tmp = new Vendedor(resultSet.getInt(&quot;id&quot;), resultSet.getString(&quot;nome&quot;),</span>
-<span class="fc" id="L50">                        resultSet.getString(&quot;cnpj&quot;), resultSet.getString(&quot;endereco&quot;),</span>
-<span class="fc" id="L51">                        resultSet.getString(&quot;email&quot;), resultSet.getString(&quot;senha&quot;));</span>
-<span class="fc" id="L52">                obj.add(tmp);</span>
-<span class="fc" id="L53">            }</span>
+<span class="fc" id="L61">            String sql = &quot;select * from vendedores&quot;;</span>
+<span class="fc" id="L62">            PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L63">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L65">                Vendedor tmp = new Vendedor(resultSet.getInt(&quot;id&quot;), resultSet.getString(&quot;nome&quot;),</span>
+<span class="fc" id="L66">                        resultSet.getString(&quot;cnpj&quot;), resultSet.getString(&quot;endereco&quot;),</span>
+<span class="fc" id="L67">                        resultSet.getString(&quot;email&quot;), resultSet.getString(&quot;senha&quot;));</span>
+<span class="fc" id="L68">                obj.add(tmp);</span>
+<span class="fc" id="L69">            }</span>
 
-<span class="nc" id="L55">        } catch (SQLException e) {</span>
-<span class="nc" id="L56">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L57">            e.printStackTrace();</span>
+<span class="nc" id="L71">        } catch (SQLException e) {</span>
+<span class="nc" id="L72">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L73">            e.printStackTrace();</span>
         } finally {
-<span class="fc" id="L59">            DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L75">            DBConnection.getInstance().closeConnection();</span>
         }
-<span class="fc" id="L61">        return obj;</span>
+<span class="fc" id="L77">        return obj;</span>
 
     }
 
+    /**
+     * Método que busca o ID dos vendedores no banco de dados.
+     *
+     * @return ID.
+     */
     public static int buscaCodigo() {
-<span class="fc" id="L66">        Connection conn = DBConnection.getInstance().getConnection();</span>
-<span class="fc" id="L67">        int id = 0;</span>
+<span class="fc" id="L87">        Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L88">        int id = 0;</span>
         try {
-<span class="fc" id="L69">            String sql = &quot;select max(id) from vendedores&quot;;</span>
-<span class="fc" id="L70">            PreparedStatement ps = conn.prepareStatement(sql);</span>
-<span class="fc" id="L71">            ResultSet resultSet = ps.executeQuery();</span>
-<span class="fc" id="L72">            resultSet.next();</span>
-<span class="fc" id="L73">            id = resultSet.getInt(1);</span>
+<span class="fc" id="L90">            String sql = &quot;select max(id) from vendedores&quot;;</span>
+<span class="fc" id="L91">            PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L92">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="fc" id="L93">            resultSet.next();</span>
+<span class="fc" id="L94">            id = resultSet.getInt(1);</span>
 
-<span class="nc" id="L75">        } catch (SQLException e) {</span>
-<span class="nc" id="L76">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
-<span class="nc" id="L77">            e.printStackTrace();</span>
+<span class="nc" id="L96">        } catch (SQLException e) {</span>
+<span class="nc" id="L97">            System.err.println(&quot;Erro ao fechar a conexão com o banco de dados:&quot;);</span>
+<span class="nc" id="L98">            e.printStackTrace();</span>
         } finally {
-<span class="fc" id="L79">            DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L100">            DBConnection.getInstance().closeConnection();</span>
         }
-<span class="fc" id="L81">        return id;</span>
+<span class="fc" id="L102">        return id;</span>
     }
 
-    // método para deletar vendedor
+    /**
+     * Método para deletar um vendedor do banco de dados com base no ID.
+     *
+     * @param id ID do vendedor a ser deletado.
+     * @return True se o vendedor foi deletado com sucesso, false caso contrário.
+     */
     public boolean deleteVendedor(int id) {
-<span class="fc" id="L86">        String sql = &quot;DELETE FROM vendedores WHERE id = ?&quot;;</span>
-<span class="fc" id="L87">        boolean deleted = false;</span>
+<span class="fc" id="L112">        String sql = &quot;DELETE FROM vendedores WHERE id = ?&quot;;</span>
+<span class="fc" id="L113">        boolean deleted = false;</span>
 
-<span class="fc" id="L89">        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L115">        try (Connection conn = DBConnection.getInstance().getConnection();</span>
+<span class="fc" id="L116">                PreparedStatement pstm = conn.prepareStatement(sql)) {</span>
 
-<span class="fc" id="L91">            pstm.setInt(1, id);</span>
+<span class="fc" id="L118">            pstm.setInt(1, id);</span>
 
-<span class="fc" id="L93">            int rowsAffected = pstm.executeUpdate();</span>
+<span class="fc" id="L120">            int rowsAffected = pstm.executeUpdate();</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            if (rowsAffected &gt; 0) {</span>
-<span class="nc" id="L96">                System.out.println(&quot;Vendedor deletado com sucesso!&quot;);</span>
-<span class="nc" id="L97">                deleted = true;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">            if (rowsAffected &gt; 0) {</span>
+<span class="nc" id="L123">                System.out.println(&quot;Vendedor deletado com sucesso!&quot;);</span>
+<span class="nc" id="L124">                deleted = true;</span>
             } else {
-<span class="fc" id="L99">                System.out.println(&quot;Vendedor com ID &quot; + id + &quot; não encontrado.&quot;);</span>
+<span class="fc" id="L126">                System.out.println(&quot;Vendedor com ID &quot; + id + &quot; não encontrado.&quot;);</span>
             }
-<span class="nc" id="L101">        } catch (SQLException e) {</span>
-<span class="nc" id="L102">            e.printStackTrace();</span>
+<span class="nc" id="L128">        } catch (SQLException e) {</span>
+<span class="nc" id="L129">            e.printStackTrace();</span>
         } finally {
-<span class="fc" id="L104">            DBConnection.getInstance().closeConnection();</span>
+<span class="fc" id="L131">            DBConnection.getInstance().closeConnection();</span>
         }
 
-<span class="fc" id="L107">        return deleted;</span>
+<span class="fc" id="L134">        return deleted;</span>
     }
 
-    // método para atualizar vendedor
+    /**
+     * Método para atualizar as informações de um vendedor no banco de dados.
+     *
+     * @param vendedor Vendedor com as informações atualizadas.
+     * @return True se o vendedor foi atualizado com sucesso, false caso contrário.
+     */
     public boolean atualizarVendedor(Vendedor vendedor) {
-<span class="nc" id="L112">        String sql = &quot;UPDATE vendedores SET &quot;;</span>
-<span class="nc" id="L113">        Connection conn = null;</span>
-<span class="nc" id="L114">        PreparedStatement ps = null;</span>
+<span class="nc" id="L144">        String sql = &quot;UPDATE vendedores SET &quot;;</span>
+<span class="nc" id="L145">        Connection conn = null;</span>
+<span class="nc" id="L146">        PreparedStatement ps = null;</span>
 
         try {
-<span class="nc" id="L117">            conn = DBConnection.getInstance().getConnection();</span>
-<span class="nc" id="L118">            int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados</span>
-<span class="nc" id="L119">            HashMap&lt;String, String&gt; fieldsToUpdate = new HashMap&lt;&gt;(); // Armazena os campos a serem atualizados</span>
+<span class="nc" id="L149">            conn = DBConnection.getInstance().getConnection();</span>
+<span class="nc" id="L150">            int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados</span>
+<span class="nc" id="L151">            HashMap&lt;String, String&gt; fieldsToUpdate = new HashMap&lt;&gt;(); // Armazena os campos a serem atualizados</span>
 
-            // Adicione todos os campos que deseja permitir a atualização
-<span class="nc bnc" id="L122" title="All 2 branches missed.">            if (vendedor.getNome() != null) {</span>
-<span class="nc" id="L123">                fieldsToUpdate.put(&quot;nome&quot;, vendedor.getNome());</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            if (vendedor.getNome() != null) {</span>
+<span class="nc" id="L154">                fieldsToUpdate.put(&quot;nome&quot;, vendedor.getNome());</span>
             }
-<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (vendedor.getCnpj() != null) {</span>
-<span class="nc" id="L126">                fieldsToUpdate.put(&quot;cnpj&quot;, vendedor.getCnpj());</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if (vendedor.getCnpj() != null) {</span>
+<span class="nc" id="L157">                fieldsToUpdate.put(&quot;cnpj&quot;, vendedor.getCnpj());</span>
             }
-<span class="nc bnc" id="L128" title="All 2 branches missed.">            if (vendedor.getEndereco() != null) {</span>
-<span class="nc" id="L129">                fieldsToUpdate.put(&quot;endereco&quot;, vendedor.getEndereco());</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            if (vendedor.getEndereco() != null) {</span>
+<span class="nc" id="L160">                fieldsToUpdate.put(&quot;endereco&quot;, vendedor.getEndereco());</span>
             }
-<span class="nc bnc" id="L131" title="All 2 branches missed.">            if (vendedor.getEmail() != null) {</span>
-<span class="nc" id="L132">                fieldsToUpdate.put(&quot;email&quot;, vendedor.getEmail());</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (vendedor.getEmail() != null) {</span>
+<span class="nc" id="L163">                fieldsToUpdate.put(&quot;email&quot;, vendedor.getEmail());</span>
             }
-<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (vendedor.getSenha() != null) {</span>
-<span class="nc" id="L135">                fieldsToUpdate.put(&quot;senha&quot;, vendedor.getSenha());</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            if (vendedor.getSenha() != null) {</span>
+<span class="nc" id="L166">                fieldsToUpdate.put(&quot;senha&quot;, vendedor.getSenha());</span>
             }
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">                if (numberOfFields &gt; 0) {</span>
-<span class="nc" id="L140">                    sql += &quot;,&quot;;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                if (numberOfFields &gt; 0) {</span>
+<span class="nc" id="L171">                    sql += &quot;,&quot;;</span>
                 }
-<span class="nc" id="L142">                sql += entry.getKey() + &quot; = ?&quot;;</span>
-<span class="nc" id="L143">                numberOfFields++;</span>
-<span class="nc" id="L144">            }</span>
+<span class="nc" id="L173">                sql += entry.getKey() + &quot; = ?&quot;;</span>
+<span class="nc" id="L174">                numberOfFields++;</span>
+<span class="nc" id="L175">            }</span>
 
-<span class="nc" id="L146">            sql += &quot; WHERE id = ?&quot;; // Adicione a cláusula WHERE</span>
+<span class="nc" id="L177">            sql += &quot; WHERE id = ?&quot;;</span>
 
-<span class="nc" id="L148">            ps = conn.prepareStatement(sql);</span>
+<span class="nc" id="L179">            ps = conn.prepareStatement(sql);</span>
 
-<span class="nc" id="L150">            int parameterIndex = 1; // Índice para os parâmetros na declaração SQL</span>
+<span class="nc" id="L181">            int parameterIndex = 1; // Índice para os parâmetros na declaração SQL</span>
 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
-<span class="nc" id="L153">                ps.setString(parameterIndex, entry.getValue());</span>
-<span class="nc" id="L154">                parameterIndex++;</span>
-<span class="nc" id="L155">            }</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : fieldsToUpdate.entrySet()) {</span>
+<span class="nc" id="L184">                ps.setString(parameterIndex, entry.getValue());</span>
+<span class="nc" id="L185">                parameterIndex++;</span>
+<span class="nc" id="L186">            }</span>
 
-            // Adicione o ID do cliente
-<span class="nc" id="L158">            ps.setInt(parameterIndex, vendedor.getId());</span>
+            // Adiciona o ID do cliente
+<span class="nc" id="L189">            ps.setInt(parameterIndex, vendedor.getId());</span>
 
-<span class="nc" id="L160">            int rowsAffected = ps.executeUpdate();</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">            return rowsAffected &gt; 0;</span>
-<span class="nc" id="L162">        } catch (SQLException e) {</span>
-<span class="nc" id="L163">            System.err.println(&quot;Ocorreu um erro ao atualizar o cliente:&quot;);</span>
-<span class="nc" id="L164">            System.err.println(&quot;Mensagem de erro: &quot; + e.getMessage());</span>
-<span class="nc" id="L165">            e.printStackTrace(); // Isso imprime o rastreamento do erro no console</span>
-<span class="nc" id="L166">            return false;</span>
+<span class="nc" id="L191">            int rowsAffected = ps.executeUpdate();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            return rowsAffected &gt; 0;</span>
+<span class="nc" id="L193">        } catch (SQLException e) {</span>
+<span class="nc" id="L194">            System.err.println(&quot;Ocorreu um erro ao atualizar o cliente:&quot;);</span>
+<span class="nc" id="L195">            System.err.println(&quot;Mensagem de erro: &quot; + e.getMessage());</span>
+<span class="nc" id="L196">            e.printStackTrace(); // Imprime o rastreamento do erro no console</span>
+<span class="nc" id="L197">            return false;</span>
         } finally {
-<span class="nc" id="L168">            DBConnection.getInstance().closeConnection();</span>
+<span class="nc" id="L199">            DBConnection.getInstance().closeConnection();</span>
         }
     }
 

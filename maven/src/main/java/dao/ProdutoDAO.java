@@ -10,9 +10,21 @@ import java.util.List;
 import java.util.Map;
 import model.Produto;
 
+/**
+ * Classe responsável por interagir com o banco de dados para operações
+ * relacionadas a produtos.
+ * É utilizada pelas classes ProdutoController e AppController.
+ * 
+ * @author Sâmeck
+ */
+
 public class ProdutoDAO {
 
-    //método para criar um vendedor
+    /**
+     * Cria um novo produto no banco de dados.
+     *
+     * @param p Produto a ser salvo.
+     */
     public static void saveProduto(Produto p) {
         Connection conn = DBConnection.getInstance().getConnection();
         try {
@@ -34,7 +46,11 @@ public class ProdutoDAO {
 
     }
 
-    //método para listar os produtos
+    /**
+     * Obtém uma lista de todos os produtos do banco de dados.
+     *
+     * @return Lista de produtos.
+     */
     public static List<Produto> getProdutos() {
 
         Connection conn = DBConnection.getInstance().getConnection();
@@ -59,6 +75,11 @@ public class ProdutoDAO {
 
     }
 
+    /**
+     * Busca o código máximo (ID) dos produtos no banco de dados.
+     *
+     * @return Código máximo.
+     */
     public static int buscaCodigo() {
         Connection conn = DBConnection.getInstance().getConnection();
         int id = 0;
@@ -78,12 +99,18 @@ public class ProdutoDAO {
         return id;
     }
 
-    // método para deletar vendedor
+    /**
+     * Deleta um produto do banco de dados com base no ID.
+     *
+     * @param id ID do produto a ser deletado.
+     * @return True se o produto foi deletado com sucesso, false caso contrário.
+     */
     public boolean deleteProduto(int id) {
         String sql = "DELETE FROM produtos WHERE id = ?";
         boolean deleted = false;
 
-        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getInstance().getConnection();
+                PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setInt(1, id);
 
@@ -104,7 +131,12 @@ public class ProdutoDAO {
         return deleted;
     }
 
-    // método para atualizar Produto
+    /**
+     * Atualiza as informações de um produto no banco de dados.
+     *
+     * @param produto Produto com as informações atualizadas.
+     * @return True se o produto foi atualizado com sucesso, false caso contrário.
+     */
     public boolean atualizarProduto(Produto produto) {
         String sql = "UPDATE produtos SET ";
         Connection conn = null;
@@ -115,7 +147,6 @@ public class ProdutoDAO {
             int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados
             HashMap<String, Object> fieldsToUpdate = new HashMap<>(); // Armazena os campos a serem atualizados
 
-            // Adicione todos os campos que deseja permitir a atualização
             if (produto.getNome() != null) {
                 fieldsToUpdate.put("nome", produto.getNome());
             }
@@ -134,7 +165,7 @@ public class ProdutoDAO {
                 numberOfFields++;
             }
 
-            sql += " WHERE id = ?"; // Adicione a cláusula WHERE
+            sql += " WHERE id = ?";
 
             ps = conn.prepareStatement(sql);
 
@@ -150,7 +181,6 @@ public class ProdutoDAO {
                 parameterIndex++;
             }
 
-            // Adicione o ID do produto
             ps.setInt(parameterIndex, produto.getId());
 
             int rowsAffected = ps.executeUpdate();
@@ -158,7 +188,7 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             System.err.println("Ocorreu um erro ao atualizar o produto:");
             System.err.println("Mensagem de erro: " + e.getMessage());
-            e.printStackTrace(); // Isso imprime o rastreamento do erro no console
+            e.printStackTrace(); // Imprime o rastreamento do erro no console
             return false;
         } finally {
             DBConnection.getInstance().closeConnection();

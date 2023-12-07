@@ -7,8 +7,7 @@ create table
         cpf char(14),
         endereco varchar(100),
         email varchar(80),
-        senha varchar(30),
-        dataCadastro date
+        senha varchar(30)
     );
 
 create table 
@@ -18,8 +17,7 @@ vendedores(
     cnpj char(18),
     endereco varchar(100),
     email varchar(80),
-    senha varchar(30),
-    dataCadastro date
+    senha varchar(30)
 ); 
 
 create table

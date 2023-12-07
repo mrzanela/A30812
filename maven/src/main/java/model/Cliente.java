@@ -9,7 +9,7 @@ public class Cliente {
     private String email;
     private String senha;
 
-
+    // Construtor que inicializa todos os campos
     public Cliente(int id, String nome, String cpf, String endereco, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
@@ -17,8 +17,11 @@ public class Cliente {
         this.email = email;
         this.senha = senha;
     }
-    public Cliente(){}
 
+    public Cliente() {
+    }
+
+    // Construtor que não inclui id
     public Cliente(String nome, String cpf, String endereco, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
@@ -27,7 +30,6 @@ public class Cliente {
         this.senha = senha;
     }
 
-   
     @Override
     public String toString() {
         return "Cliente{" +                 
@@ -39,6 +41,7 @@ public class Cliente {
                 '}';
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }

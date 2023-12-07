@@ -5,14 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-//import factory.ConnectionFactory;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import model.Cliente;
 
+/**
+ * Classe que fornece métodos de acesso a dados para a entidade Cliente.
+ * Interage com o banco de dados para salvar, recuperar, buscar códigos, deletar
+ * e atualizar clientes.
+ * Utiliza DBConnection para gerenciar a conexão com o banco de dados.
+ * Utilizada pelo ClienteController.
+ * 
+ * @author Sâmeck
+ */
+
 public class ClienteDAO {
 
+    /**
+     * Salva um cliente no banco de dados.
+     *
+     * @param c O objeto Cliente a ser salvo.
+     */
     public static void saveCliente(Cliente c) {
         Connection conn = DBConnection.getInstance().getConnection();
         PreparedStatement ps = null;
@@ -32,11 +46,16 @@ public class ClienteDAO {
             System.err.println("Erro ao fechar a conexão com o banco de dados:");
             e.printStackTrace();
         } finally {
-             DBConnection.getInstance().closeConnection();
+            DBConnection.getInstance().closeConnection();
         }
 
     }
 
+    /**
+     * Obtém a lista de todos os clientes do banco de dados.
+     *
+     * @return Uma lista de objetos Cliente.
+     */
     public static List<Cliente> getClientes() {
 
         Connection conn = DBConnection.getInstance().getConnection();
@@ -64,6 +83,11 @@ public class ClienteDAO {
 
     }
 
+    /**
+     * Busca o código máximo (ID) dos clientes no banco de dados.
+     *
+     * @return O código máximo encontrado.
+     */
     public static int buscaCodigo() {
         Connection conn = DBConnection.getInstance().getConnection();
         PreparedStatement ps = null;
@@ -85,12 +109,13 @@ public class ClienteDAO {
         return id;
     }
 
-// método para deletar cliente
+    // método para deletar cliente
     public boolean deleteCliente(int id) {
         String sql = "DELETE FROM clientes WHERE id = ?";
         boolean deleted = false;
 
-        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getInstance().getConnection();
+                PreparedStatement pstm = conn.prepareStatement(sql)) {
 
             pstm.setInt(1, id);
 
@@ -122,7 +147,6 @@ public class ClienteDAO {
             int numberOfFields = 0; // Contador para acompanhar o número de campos atualizados
             HashMap<String, String> fieldsToUpdate = new HashMap<>(); // Armazena os campos a serem atualizados
 
-            // Adicione todos os campos que deseja permitir a atualização
             if (cliente.getNome() != null) {
                 fieldsToUpdate.put("nome", cliente.getNome());
             }
@@ -147,7 +171,7 @@ public class ClienteDAO {
                 numberOfFields++;
             }
 
-            sql += " WHERE id = ?"; // Adicione a cláusula WHERE
+            sql += " WHERE id = ?";
 
             ps = conn.prepareStatement(sql);
 
@@ -158,7 +182,7 @@ public class ClienteDAO {
                 parameterIndex++;
             }
 
-            // Adicione o ID do cliente
+            // Adicionar o ID do cliente
             ps.setInt(parameterIndex, cliente.getId());
 
             int rowsAffected = ps.executeUpdate();
@@ -166,7 +190,7 @@ public class ClienteDAO {
         } catch (SQLException e) {
             System.err.println("Ocorreu um erro ao atualizar o cliente:");
             System.err.println("Mensagem de erro: " + e.getMessage());
-            e.printStackTrace(); // Isso imprime o rastreamento do erro no console
+            e.printStackTrace(); // Imprime o rastreamento do erro no console
             return false;
         } finally {
             DBConnection.getInstance().closeConnection();

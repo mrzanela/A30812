@@ -6,14 +6,12 @@ import dao.ProdutoDAO;
 import dao.VendedorDAO;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
 import model.Cliente;
 import model.Produto;
 import view.AppView;
 import view.ClienteView;
 import view.ProdutoView;
 import view.VendedorView;
-
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,14 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Vendedor;
 
+/**
+ *
+ * @author Jean
+ */
+/**
+ * Classe que contém os testes unitários para a aplicação.
+ */
 public class TesteAplicacao {
 
+// Teste para buscar o próximo código disponível para vendedor
     @Test
     public void testBuscaCodigo() {
         int codigo = VendedorDAO.buscaCodigo();
         assertTrue(codigo >= 0);
     }
 
+    // Teste do construtor de Cliente sem ID
     @Test
     public void testConstrutorSemId() {
         String nome = "Maria";
@@ -46,6 +53,7 @@ public class TesteAplicacao {
         assertEquals(senha, cliente.getSenha());
     }
 
+    // Teste para reabrir conexão com o banco de dados
     @Test
     public void testReaberturaConexao() {
         DBConnection dbConnection = DBConnection.getInstance();
@@ -64,6 +72,7 @@ public class TesteAplicacao {
             fail("Exceção ao verificar o estado da conexão: " + e.getMessage());
         }
     }
+// Teste para verificar se várias instâncias de DBConnection são a mesmas
 
     @Test
     public void testarMultiplasGetInstances() {
@@ -72,6 +81,7 @@ public class TesteAplicacao {
 
         assertSame(instance1, instance2);
     }
+// Teste para verificar se a conexão está sendo encerrada corretamente
 
     @Test
     public void testCloseConnection() {
@@ -86,59 +96,69 @@ public class TesteAplicacao {
             fail("Exceção ao verificar o estado da conexão: " + e.getMessage());
         }
     }
+// Teste para retorno de informação para o usuário sobre pesquisa do vendedor 
 
     @Test
     public void testMostraMsgVendedorNaoEncontrado() {
         VendedorView vendedorView = new VendedorView(null);
         vendedorView.mostraMsgVendedorNaoEncontrado();
     }
+// Teste para retorno de informação sobre confirmação da delecao de um vendedor
 
     @Test
     public void testMostraMsgDelecaoParaVendedor() {
         VendedorView vendedorView = new VendedorView(null);
         vendedorView.mostraMsgDelecao();
     }
+// Teste para retorno de informação sobre confirmação da criação de um vendedor
 
     @Test
     public void testMostraMsgCriacaoVendedor() {
         VendedorView vendedorView = new VendedorView(null);
         vendedorView.mostraMsgCriacao();
     }
+// Teste para retorno de informação para o usuário sobre pesquisa do cliente 
 
     @Test
     public void testMostraMsgClienteNaoEncontrado() {
         ClienteView clienteView = new ClienteView(null);
     }
+// Teste para retorno de informação sobre confirmação da delecao de um cliente
 
     @Test
     public void testMostraMsgDelecaoParaCliente() {
         ClienteView clienteView = new ClienteView(null);
         clienteView.mostraMsgDelecao();
     }
+// Teste para retorno de informação sobre confirmação da criação de um cliente
 
     @Test
     public void testMostraMsgCriacaoParaCliente() {
         ClienteView clienteView = new ClienteView(null);
         clienteView.mostraMsgCriacao();
     }
+// Teste para mensagem de produtro não encontrado
 
     @Test
     public void testMostraMsgProdutoNaoEncontrado() {
         ProdutoView produtoView = new ProdutoView(null);
         produtoView.mostraMsgProdutoNaoEncontrado();
     }
+// Teste para retorno de informação sobre confirmação da delecao de um  produto
 
     @Test
     public void testMostraMsgDelecao() {
         ProdutoView produtoView = new ProdutoView(null);
         produtoView.mostraMsgDelecao();
     }
+// Teste para retorno de informação sobre confirmação da criação de um produto
 
     @Test
     public void testMostraMsgCriacao() {
         ProdutoView produtoView = new ProdutoView(null);
         produtoView.mostraMsgCriacao();
     }
+// Teste para o método de exclusão de um produto
 
     @Test
     public void testDeleteProduto() {
@@ -170,6 +190,7 @@ public class TesteAplicacao {
             }
         }
     }
+// Teste para o método de salvar um vendedor
 
     @Test
     public void testSaveVendedor() {
@@ -259,6 +280,7 @@ public class TesteAplicacao {
 
         assertEquals(tamanhoAntes + 1, tamanhoDepois);
     }
+// Teste para salvar um produto com nome nulo
 
     @Test
     public void SaveProdutoComNomeNulo() {
@@ -278,6 +300,7 @@ public class TesteAplicacao {
         // Verifica se o produto com nome nulo não está na lista
         assertFalse(produtoDAO.getProdutos().contains(produto));
     }
+// Teste para salvar um produto com preço zero
 
     @Test
     public void SalvarProdutoComPrecoZero() {
@@ -293,6 +316,7 @@ public class TesteAplicacao {
 
         assertTrue(tamanhoDepois > tamanhoAntes);
     }
+    // Teste para obter a lista de produtos
 
     @Test
     public void GetProdutos() {

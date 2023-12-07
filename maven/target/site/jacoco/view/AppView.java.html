@@ -3,61 +3,70 @@
 import java.util.Scanner;
 
 /**
+ * A classe AppView fornece métodos para interagir com o usuário através do
+ * console, exibindo menus, mensagens e obtendo entrada do usuário. É utilizada
+ * para a interação principal com o programa.
  *
  * @author Sâmeck
  */
-<span class="nc" id="L9">public class AppView {</span>
+<span class="nc" id="L12">public class AppView {</span>
 
     public static int menuInicial() {
-<span class="fc" id="L12">        Scanner scan = new Scanner(System.in);</span>
 
-<span class="fc" id="L14">        System.out.println(&quot;---------OPÇOES CLIENTE---------&quot;);</span>
-<span class="fc" id="L15">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
-<span class="fc" id="L16">        System.out.println(&quot;[1] Inserir Cliente&quot;);</span>
-<span class="fc" id="L17">        System.out.println(&quot;[2] Listar Clientes&quot;);</span>
-<span class="fc" id="L18">        System.out.println(&quot;[3] Atualizar Clientes&quot;);</span>
-<span class="fc" id="L19">        System.out.println(&quot;[4] Excluir um Cliente&quot;);        </span>
-<span class="fc" id="L20">        System.out.println(&quot;---------OPÇOES VENDEDOR---------&quot;);</span>
-<span class="fc" id="L21">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
-<span class="fc" id="L22">        System.out.println(&quot;[5] Inserir Vendedor&quot;);</span>
-<span class="fc" id="L23">        System.out.println(&quot;[6] Listar Vendedores&quot;);</span>
-<span class="fc" id="L24">        System.out.println(&quot;[7] Atualizar Vendedores&quot;);</span>
-<span class="fc" id="L25">        System.out.println(&quot;[8] Excluir um Vendedor&quot;);</span>
-<span class="fc" id="L26">        System.out.println(&quot;---------OPÇOES PRODUTO---------&quot;);</span>
-<span class="fc" id="L27">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
-<span class="fc" id="L28">        System.out.println(&quot;[9] Inserir Produto&quot;);</span>
-<span class="fc" id="L29">        System.out.println(&quot;[10] Listar Produtos&quot;);</span>
-<span class="fc" id="L30">        System.out.println(&quot;[11] Atualizar Produtos&quot;);</span>
-<span class="fc" id="L31">        System.out.println(&quot;[12] Excluir um Produto&quot;);</span>
-<span class="fc" id="L32">        System.out.println(&quot;[13] Sair&quot;);</span>
+        // Scanner para obter entrada do usuário.
+<span class="fc" id="L17">        Scanner scan = new Scanner(System.in);</span>
 
-<span class="fc" id="L34">        System.out.println(&quot;----------------------------&quot;);</span>
+<span class="fc" id="L19">        System.out.println(&quot;---------OPÇOES CLIENTE---------&quot;);</span>
+<span class="fc" id="L20">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
+<span class="fc" id="L21">        System.out.println(&quot;[1] Inserir Cliente&quot;);</span>
+<span class="fc" id="L22">        System.out.println(&quot;[2] Listar Clientes&quot;);</span>
+<span class="fc" id="L23">        System.out.println(&quot;[3] Atualizar Clientes&quot;);</span>
+<span class="fc" id="L24">        System.out.println(&quot;[4] Excluir um Cliente&quot;);</span>
+<span class="fc" id="L25">        System.out.println(&quot;---------OPÇOES VENDEDOR---------&quot;);</span>
+<span class="fc" id="L26">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
+<span class="fc" id="L27">        System.out.println(&quot;[5] Inserir Vendedor&quot;);</span>
+<span class="fc" id="L28">        System.out.println(&quot;[6] Listar Vendedores&quot;);</span>
+<span class="fc" id="L29">        System.out.println(&quot;[7] Atualizar Vendedores&quot;);</span>
+<span class="fc" id="L30">        System.out.println(&quot;[8] Excluir um Vendedor&quot;);</span>
+<span class="fc" id="L31">        System.out.println(&quot;---------OPÇOES PRODUTO---------&quot;);</span>
+<span class="fc" id="L32">        System.out.println(&quot;Escolha uma opcao: &quot;);</span>
+<span class="fc" id="L33">        System.out.println(&quot;[9] Inserir Produto&quot;);</span>
+<span class="fc" id="L34">        System.out.println(&quot;[10] Listar Produtos&quot;);</span>
+<span class="fc" id="L35">        System.out.println(&quot;[11] Atualizar Produtos&quot;);</span>
+<span class="fc" id="L36">        System.out.println(&quot;[12] Excluir um Produto&quot;);</span>
+<span class="fc" id="L37">        System.out.println(&quot;[13] Sair&quot;);</span>
 
-<span class="fc" id="L36">        return scan.nextInt();</span>
+<span class="fc" id="L39">        System.out.println(&quot;----------------------------&quot;);</span>
+
+<span class="fc" id="L41">        return scan.nextInt();</span>
     }
 
+    // Exibe mensagem indicando opção inválida.
     public static void mostraMsgInvalida() {
-<span class="nc" id="L40">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L41">        System.out.println(&quot;\&quot;OPCAO INVALIDA!!!!\&quot;&quot;);</span>
-<span class="nc" id="L42">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L43">    }</span>
-
-    public static void mostraMsgNaoEncontrado() {
 <span class="nc" id="L46">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L47">        System.out.println(&quot;Registro não encontrado!&quot;);</span>
+<span class="nc" id="L47">        System.out.println(&quot;\&quot;OPCAO INVALIDA!!!!\&quot;&quot;);</span>
 <span class="nc" id="L48">        System.out.println(&quot;-------------------------------&quot;);</span>
 <span class="nc" id="L49">    }</span>
 
+    // Exibe mensagem indicando que nenhum registro foi encontrado.
+    public static void mostraMsgNaoEncontrado() {
+<span class="nc" id="L53">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L54">        System.out.println(&quot;Registro não encontrado!&quot;);</span>
+<span class="nc" id="L55">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L56">    }</span>
+
+    // Exibe mensagem indicando que a lista está vazia.
     public static void mostraMsgListaVazia() {
-<span class="nc" id="L52">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L53">        System.out.println(&quot;Nenhum registro encontrado!&quot;);</span>
-<span class="nc" id="L54">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L55">    }</span>
-    
-    public static void mostraMsgFim() {
-<span class="nc" id="L58">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L59">        System.out.println(&quot;ATÉ LOGO..&quot;);</span>
 <span class="nc" id="L60">        System.out.println(&quot;-------------------------------&quot;);</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L61">        System.out.println(&quot;Nenhum registro encontrado!&quot;);</span>
+<span class="nc" id="L62">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L63">    }</span>
+
+    // Exibe mensagem de despedida.
+    public static void mostraMsgFim() {
+<span class="nc" id="L67">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L68">        System.out.println(&quot;ATÉ LOGO..&quot;);</span>
+<span class="nc" id="L69">        System.out.println(&quot;-------------------------------&quot;);</span>
+<span class="nc" id="L70">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

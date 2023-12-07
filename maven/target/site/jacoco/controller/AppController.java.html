@@ -13,119 +13,145 @@ import view.ProdutoView;
 import view.VendedorView;
 
 /**
+ * Controlador principal da aplicação.
+ * Responsável por gerenciar clientes, vendedores, produtos e as operações
+ * relacionadas a cada um deles.
+ * Ele inicia a aplicação.
  *
  * @author Sâmeck
  */
+
 public class AppController {
 
+    // Lista de clientes
     private List&lt;Cliente&gt; clientes;
     private ClienteView cv;
     private ClienteController cc;
     private Cliente c;
 
+    // Lista de vendedores
     private List&lt;Vendedor&gt; vendedores;
     private VendedorView vv;
     private VendedorController vc;
     private Vendedor v;
 
+    // Lista de produtos
     private List&lt;Produto&gt; produtos;
     private ProdutoView pv;
     private ProdutoController pc;
     private Produto p;
 
-<span class="nc" id="L36">    public AppController() {</span>
-<span class="nc" id="L37">        this.clientes = ClienteDAO.getClientes();</span>
-<span class="nc" id="L38">        this.cv = new ClienteView(clientes);</span>
-<span class="nc" id="L39">        this.cc = new ClienteController(cv, clientes);</span>
+    /**
+     * Construtor da classe AppController. Inicializa as listas e as views
+     * necessárias.
+     */
+<span class="nc" id="L48">    public AppController() {</span>
 
-<span class="nc" id="L41">        this.vendedores = VendedorDAO.getVendedores();</span>
-<span class="nc" id="L42">        this.vv = new VendedorView(vendedores);</span>
-<span class="nc" id="L43">        this.vc = new VendedorController(vv, vendedores);</span>
+        // Inicialização dos clientes
+<span class="nc" id="L51">        this.clientes = ClienteDAO.getClientes();</span>
+<span class="nc" id="L52">        this.cv = new ClienteView(clientes);</span>
+<span class="nc" id="L53">        this.cc = new ClienteController(cv, clientes);</span>
 
-<span class="nc" id="L45">        this.produtos = ProdutoDAO.getProdutos();</span>
-<span class="nc" id="L46">        this.pv = new ProdutoView(produtos);</span>
-<span class="nc" id="L47">        this.pc = new ProdutoController(pv, produtos);</span>
-<span class="nc" id="L48">    }</span>
+        // Inicialização dos vendedores
+<span class="nc" id="L56">        this.vendedores = VendedorDAO.getVendedores();</span>
+<span class="nc" id="L57">        this.vv = new VendedorView(vendedores);</span>
+<span class="nc" id="L58">        this.vc = new VendedorController(vv, vendedores);</span>
 
+        // Inicialização dos produtos
+<span class="nc" id="L61">        this.produtos = ProdutoDAO.getProdutos();</span>
+<span class="nc" id="L62">        this.pv = new ProdutoView(produtos);</span>
+<span class="nc" id="L63">        this.pc = new ProdutoController(pv, produtos);</span>
+<span class="nc" id="L64">    }</span>
+
+    /**
+     * Inicia a aplicação e gerencia o fluxo de operações com base nas escolhas do
+     * usuário.
+     */
     public void iniciar() {
-<span class="nc" id="L51">        int op = -1;</span>
+<span class="nc" id="L71">        int op = -1;</span>
         do {
-<span class="nc" id="L53">            op = AppView.menuInicial();</span>
-<span class="nc bnc" id="L54" title="All 14 branches missed.">            switch (op) {</span>
-                case 1: // inserir cliente
-<span class="nc" id="L56">                    boolean status = cc.criaCliente();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">                    if (status == true) {</span>
-<span class="nc" id="L58">                        cv.mostraMsgCriacao();</span>
+            // Exibe o menu inicial e obtém a escolha do usuário
+<span class="nc" id="L74">            op = AppView.menuInicial();</span>
+
+            // Realiza operações com base na escolha do usuário
+<span class="nc bnc" id="L77" title="All 14 branches missed.">            switch (op) {</span>
+                case 1: // Inserir cliente
+<span class="nc" id="L79">                    boolean status = cc.criaCliente();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L81">                        cv.mostraMsgCriacao();</span>
 
                     }
                     break;
-                case 2: // listar clientes
-<span class="nc bnc" id="L63" title="All 2 branches missed.">                    if (!clientes.isEmpty()) {</span>
-<span class="nc" id="L64">                        cv.listarClientes();</span>
+                case 2: // Listar clientes
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                    if (!clientes.isEmpty()) {</span>
+<span class="nc" id="L87">                        cv.listarClientes();</span>
                     } else {
-<span class="nc" id="L66">                        AppView.mostraMsgListaVazia();</span>
+<span class="nc" id="L89">                        AppView.mostraMsgListaVazia();</span>
                     }
-<span class="nc" id="L68">                    break;</span>
+<span class="nc" id="L91">                    break;</span>
                 case 3: // Atualizar Cliente
-<span class="nc" id="L70">                    cc.atualizarCliente();</span>
-<span class="nc" id="L71">                    break;</span>
+<span class="nc" id="L93">                    cc.atualizarCliente();</span>
+<span class="nc" id="L94">                    break;</span>
                 case 4: // Excluir um Cliente
-<span class="nc" id="L73">                    boolean deleted = cc.deletaCliente();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">                    if (deleted) {</span>
+<span class="nc" id="L96">                    boolean deleted = cc.deletaCliente();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                    if (deleted) {</span>
+                        // Caso necessário essa é a lógica para tratamento após a exclusão
                     }
                     break;
                 case 5: // inserir vendedor
-<span class="nc" id="L78">                    status = vc.criaVendedor();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">                    if (status == true) {</span>
-<span class="nc" id="L80">                        vv.mostraMsgCriacao();</span>
+<span class="nc" id="L102">                    status = vc.criaVendedor();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L104">                        vv.mostraMsgCriacao();</span>
                     }
                     break;
                 case 6: // listar vendedores
-<span class="nc bnc" id="L84" title="All 2 branches missed.">                    if (!vendedores.isEmpty()) {</span>
-<span class="nc" id="L85">                        vv.listarVendedores();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (!vendedores.isEmpty()) {</span>
+<span class="nc" id="L109">                        vv.listarVendedores();</span>
                     } else {
-<span class="nc" id="L87">                        AppView.mostraMsgListaVazia();</span>
+<span class="nc" id="L111">                        AppView.mostraMsgListaVazia();</span>
                     }
-<span class="nc" id="L89">                    break;</span>
+<span class="nc" id="L113">                    break;</span>
                 case 7: // atualizar vendedor
-<span class="nc" id="L91">                    vc.atualizarVendedor();</span>
-<span class="nc" id="L92">                    break;</span>
+<span class="nc" id="L115">                    vc.atualizarVendedor();</span>
+<span class="nc" id="L116">                    break;</span>
                 case 8: // excluir um vendedor
-<span class="nc" id="L94">                    deleted = vc.deletaVendedor();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">                    if (deleted) {</span>
+<span class="nc" id="L118">                    deleted = vc.deletaVendedor();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                    if (deleted) {</span>
+                        // Caso necessário essa é a lógica para tratamento após a exclusão
                     }
                     break;
                 case 9: // inserir produto
-<span class="nc" id="L99">                    status = pc.criaProduto();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">                    if (status == true) {</span>
-<span class="nc" id="L101">                        pv.mostraMsgCriacao();</span>
+<span class="nc" id="L124">                    status = pc.criaProduto();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">                    if (status == true) {</span>
+<span class="nc" id="L126">                        pv.mostraMsgCriacao();</span>
                     }
                     break;
                 case 10: // listar produtos
-<span class="nc bnc" id="L105" title="All 2 branches missed.">                    if (!produtos.isEmpty()) {</span>
-<span class="nc" id="L106">                        pv.listarProdutos();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                    if (!produtos.isEmpty()) {</span>
+<span class="nc" id="L131">                        pv.listarProdutos();</span>
                     } else {
-<span class="nc" id="L108">                        AppView.mostraMsgListaVazia();</span>
+<span class="nc" id="L133">                        AppView.mostraMsgListaVazia();</span>
                     }
-<span class="nc" id="L110">                    break;</span>
-                case 11: //atualizar produtos
-<span class="nc" id="L112">                    pc.atualizarProduto();</span>
-<span class="nc" id="L113">                    break;</span>
+<span class="nc" id="L135">                    break;</span>
+                case 11: // atualizar produtos
+<span class="nc" id="L137">                    pc.atualizarProduto();</span>
+<span class="nc" id="L138">                    break;</span>
                 case 12: // excluir um produto
-<span class="nc" id="L115">                    deleted = pc.deletaProduto();</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">                    if (deleted) {</span>
+<span class="nc" id="L140">                    deleted = pc.deletaProduto();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    if (deleted) {</span>
+                        // Lógica para tratamento após a exclusão, se necessário
                     }
                     break;
                 case 13: // sair do programa
-<span class="nc" id="L120">                    AppView.mostraMsgFim();</span>
-<span class="nc" id="L121">                    op = -1;</span>
-<span class="nc" id="L122">                    break;</span>
+<span class="nc" id="L146">                    AppView.mostraMsgFim();</span>
+<span class="nc" id="L147">                    op = -1;</span>
+<span class="nc" id="L148">                    break;</span>
                 default:
-<span class="nc" id="L124">                    AppView.mostraMsgInvalida();</span>
+<span class="nc" id="L150">                    AppView.mostraMsgInvalida();</span>
             }
 
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        } while (op &gt; 0);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        } while (op &gt; 0);</span>
 
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L155">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

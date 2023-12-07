@@ -8,10 +8,10 @@ maven,view,AppView,43,68,0,0,17,22,5,1,5,1
 maven,view,ProdutoView,184,42,6,0,46,16,8,4,4,4
 maven,view,VendedorView,238,42,8,0,58,16,10,4,4,4
 maven,dao,DBConnection,18,77,2,8,9,19,2,8,0,5
-maven,dao,VendedorDAO,197,159,19,3,51,44,11,6,1,5
-maven,dao,ClienteDAO,309,57,20,2,84,16,14,3,4,2
-maven,dao,ProdutoDAO,220,118,17,3,59,32,11,5,2,4
+maven,dao,VendedorDAO,197,159,19,3,51,45,11,6,1,5
+maven,dao,ClienteDAO,262,104,20,2,72,29,13,4,3,3
+maven,dao,ProdutoDAO,220,118,17,3,59,33,11,5,2,4
 maven,aplicacao,Main,10,0,0,0,4,0,2,0,2,0
 maven,model,Vendedor,61,62,0,0,9,26,3,13,3,13
-maven,model,Cliente,72,51,0,0,15,19,9,7,9,7
+maven,model,Cliente,46,77,0,0,3,32,2,14,2,14
 maven,model,Produto,16,70,0,0,7,19,2,10,2,10

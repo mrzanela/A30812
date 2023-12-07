@@ -2,12 +2,21 @@
 
 import controller.AppController;
 
-<span class="nc" id="L5">public class Main {</span>
+//Classe principal que contém o método main para iniciar a aplicação.
+<span class="nc" id="L6">public class Main {</span>
 
-    public static void main(String[] args) {
-<span class="nc" id="L8">        AppController ac = new AppController();</span>
-<span class="nc" id="L9">        ac.iniciar();</span>
-<span class="nc" id="L10">    }</span>
+    /**
+     *
+     * Método principal que é chamado quando a aplicação é iniciada. Cria uma
+     * instância do AppController e inicia a aplicação chamando o método
+     * iniciar().
+     */
+    public static void main(String[] args) {// Cria uma instância do controlador da aplicação
+<span class="nc" id="L15">        AppController ac = new AppController();</span>
+
+        // Inicia a aplicação chamando o método iniciar() do controlador
+<span class="nc" id="L18">        ac.iniciar();</span>
+<span class="nc" id="L19">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
