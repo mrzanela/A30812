@@ -1,4 +1,5 @@
 steps\CadastrarProdutoTeste.class
+JUnit\TesteAplicacao.class
 steps\CadastrarVendedor.class
 steps\RunCucumberTest.class
-JUnit\TesteAplicacao.class
+steps\CadastrarCliente.class

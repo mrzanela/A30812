@@ -26,8 +26,8 @@ public class Cliente {
         this.email = email;
         this.senha = senha;
     }
-    
-    
+
+   
     @Override
     public String toString() {
         return "Cliente{" +                 
