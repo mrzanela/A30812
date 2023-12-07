@@ -6,18 +6,86 @@ import dao.ProdutoDAO;
 import dao.VendedorDAO;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import model.Cliente;
 import model.Produto;
 import view.AppView;
 import view.ClienteView;
 import view.ProdutoView;
 import view.VendedorView;
+
 import java.io.ByteArrayInputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Vendedor;
 
 public class TesteAplicacao {
+
+    @Test
+    public void testBuscaCodigo() {
+        int codigo = VendedorDAO.buscaCodigo();
+        assertTrue(codigo >= 0);
+    }
+
+    @Test
+    public void testConstrutorSemId() {
+        String nome = "Maria";
+        String cpf = "987.654.321-09";
+        String endereco = "Rua B, 456";
+        String email = "maria@example.com";
+        String senha = "senha456";
+
+        Cliente cliente = new Cliente(nome, cpf, endereco, email, senha);
+
+        assertEquals(nome, cliente.getNome());
+        assertEquals(cpf, cliente.getCpf());
+        assertEquals(endereco, cliente.getEndereco());
+        assertEquals(email, cliente.getEmail());
+        assertEquals(senha, cliente.getSenha());
+    }
+
+    @Test
+    public void testReaberturaConexao() {
+        DBConnection dbConnection = DBConnection.getInstance();
+        Connection connection = dbConnection.getConnection();
+
+        try {
+            assertFalse(connection.isClosed());
+            dbConnection.closeConnection();
+            assertTrue(connection.isClosed());
+
+            // Tentar reabrir a conexão
+            Connection reopenedConnection = dbConnection.getConnection();
+            assertNotNull(reopenedConnection);
+            assertFalse(reopenedConnection.isClosed());
+        } catch (SQLException e) {
+            fail("Exceção ao verificar o estado da conexão: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testarMultiplasGetInstances() {
+        DBConnection instance1 = DBConnection.getInstance();
+        DBConnection instance2 = DBConnection.getInstance();
+
+        assertSame(instance1, instance2);
+    }
+
+    @Test
+    public void testCloseConnection() {
+        DBConnection dbConnection = DBConnection.getInstance();
+        Connection connection = dbConnection.getConnection();
+
+        try {
+            assertFalse(connection.isClosed());
+            dbConnection.closeConnection();
+            assertTrue(connection.isClosed());
+        } catch (SQLException e) {
+            fail("Exceção ao verificar o estado da conexão: " + e.getMessage());
+        }
+    }
 
     @Test
     public void testMostraMsgVendedorNaoEncontrado() {
